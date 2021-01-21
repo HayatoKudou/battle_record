@@ -20,3 +20,34 @@
     margin: 0; 
     padding: 0;
 }
+
+.flame10 {
+    padding: 1em;
+    margin: 0.5em auto;
+    width:100%;
+    color: #696969;
+    background: #ffffe0;
+    border-left: solid 15px #ff8c00;
+    margin-left: 30px;    
+}
+
+.flame10 h5 {
+    margin: 0;
+    margin-right: 20px;
+}
+
+.flame10 .top_form {
+    display: flex;
+}
+
+.flame10 .top_form span {
+    font-size: 15px;
+}
+
+.flame10 .bottom_form {
+    text-align: right;
+}
+
+.flame10 .bottom_form button {
+    padding: 3px 10px 3px 10px;
+}
