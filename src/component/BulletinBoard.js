@@ -14,7 +14,7 @@ export default function BulletinBoard() {
     const [selected_platform, set_selected_platform] = useState('playstation');
     const [error_data, set_error_data] = useState('');
     const [tag, setTag] = useState('');
-    const [device, set_device] = useState('');
+    const [device, set_device] = useState('pc');
 
     const { register, handleSubmit, errors } = useForm();
 
@@ -163,7 +163,6 @@ export default function BulletinBoard() {
                                 defaultValue="ゲストユーザー"
                             />
                             <div className="tag_form">
-                                {console.log(tag)}
                                 <Button className={tag.indexOf('VC有り') !== -1 ? "tag_checked" : ''} variant="outlined" size="small" color="primary" onClick={(e) => changeTag(e)}>VC有り</Button>
                                 <Button className={tag.indexOf('VC無し') !== -1 ? "tag_checked" : ''} variant="outlined" size="small" color="primary" onClick={(e) => changeTag(e)}>VC無し</Button>
                                 <Button className={tag.indexOf('協力プレイ') !== -1 ? "tag_checked" : ''} variant="outlined" size="small" color="primary" onClick={(e) => changeTag(e)}>協力プレイ</Button>
@@ -177,7 +176,7 @@ export default function BulletinBoard() {
                                 <Button className={tag.indexOf('社会人') !== -1 ? "tag_checked" : ''} variant="outlined" size="small" color="primary" onClick={(e) => changeTag(e)}>社会人</Button>
                                 <Button className={tag.indexOf('学生') !== -1 ? "tag_checked" : ''} variant="outlined" size="small" color="primary" onClick={(e) => changeTag(e)}>学生</Button>
                             </div>
-                            <TextField className="coment_input" variant="outlined" name="comment" multiline rows={4}
+                            <TextField className="coment_input" variant="outlined" name="comment" multiline rows={device === 'pc' ? 4 : 2}
                                 error={errors.comment ? true : false}
                                 inputRef={register({ required: true })}
                                 helperText={

@@ -189,4 +189,20 @@ code {
   .coment_input {
     margin-left: 0 !important;
   }
+
+  .tag_form {
+    margin-left: 0px !important;
+  }
+  .tag_form button {
+    font-size: 10px !important;
+    padding: 2px !important;
+    margin: 2px !important;
+  }
+
+  .player_name_form .post {
+    margin-left: 0px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
 }

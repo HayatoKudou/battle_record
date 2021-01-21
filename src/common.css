@@ -50,4 +50,17 @@
 
 .flame10 .bottom_form button {
     padding: 3px 10px 3px 10px;
+    color: black;
+}
+
+
+@media screen and (max-width: 600px) {
+    .flame10 {
+        margin-left: 0px !important;
+        width: auto !important;
+        padding-bottom: 10px !important;
+    }
+    .flame10 span {
+        font-size: 13px;
+    }
 }
