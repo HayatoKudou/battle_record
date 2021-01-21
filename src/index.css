@@ -11,3 +11,154 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.route_link {
+  text-decoration: none;
+}
+
+
+.player_name_form {
+  width: 80%;
+}
+
+.player_name_input {
+  padding: 0;
+  width: 100%;
+  margin-left: 8px !important;
+}
+.coment_input {
+  padding: 0;
+  width: 100%;
+  margin-left: 8px !important;
+  margin-top: 15px !important;
+}
+
+.select_platform {
+  margin-top: 30px;
+  display: flex;
+}
+
+.select_platform .select_platform_form {
+  margin-left: 50px;
+  display: flex;
+  width: 80%;
+}
+
+.select_platform  .select_platform_form li{
+  width: 33.333333%;
+  float: left;
+}
+
+.select_platform_form li button {
+  display: block;
+  margin: 0 auto;
+}
+
+.select_platform ul {
+  height: 60px;
+  opacity: 0.6;
+  background-color: #4e4e4e;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.select_platform button {
+  padding-top: 15px;
+  color: white;
+}
+
+.selected_platform {
+  background-color: black;
+  border-radius: 0;
+}
+
+
+.userinfp {
+  padding-left: 100px;
+  margin-top: 30px;
+}
+
+.userinfp .user_avatar_image {
+  height: 50px;
+  border: .25rem solid var(--text-color);
+  border-radius: 50%;
+  border: 0.20rem solid #92e2b6;
+  margin-right: 10px;
+}
+
+.userinfp .user_avatar_info{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* float: left; */
+}
+
+.bulletinBoard_checkBox_form {
+  display: flex;
+  font-size: 15px;
+  line-height: 30px;
+  text-align: center;
+}
+
+.bulletinBoard_checkBox_form .bulletinBoard_checkBox {
+  padding-right: 0px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.select_platform_left_form {
+  width: 30%;
+}
+
+
+
+
+/* スマホ用 */
+@media screen and (max-width: 600px) {
+
+  .select_platform .select_platform_form {
+    margin: 0 auto !important;
+  }
+
+  .bulletinBoard_checkBox_form {
+    font-size: 13px !important;
+    margin-right: 6px !important;
+  }
+
+  .header_title {
+    font-size: 3vw !important;
+  }
+
+  .select_platform_left_form {
+    width: 100%;
+  }
+
+  .select_platform_form {
+    display: block !important;
+  }
+
+  .select_platform_form li{
+    width: 33.333333% !important;
+    float: left !important;
+  }
+
+  .select_platform_form li button {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .player_name_form {
+    width: 100% !important;
+    margin-top: 10px !important;
+  }
+
+  .player_name_input {
+    margin-top: 15px !important;
+    margin-left: 0 !important;
+  }
+  .coment_input {
+    margin-left: 0 !important;
+  }
+}

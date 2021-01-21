@@ -1,0 +1,22 @@
+.conditions{
+    padding-left: 10px;
+    padding: 0.5em 1em;
+    margin: 1em 0;
+    background: #f4f4f4;
+    border-left: solid 6px #5bb7ae;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.33);
+}
+
+.conditions div {
+    margin-bottom: 10px;
+}
+
+.conditions p {
+    margin: 0; 
+    padding: 0;
+}
+
+.conditions h4 {
+    margin: 0; 
+    padding: 0;
+}

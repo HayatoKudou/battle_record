@@ -9,7 +9,8 @@ import {
 import App from './App';
 import Login from './auth/Login';
 // import Logout from './Logout';
-import Ranking from './Ranking';
+import UserSearch from './parts/UserSearch';
+import BulletinBoard from './BulletinBoard';
 import Auth from './auth/Auth';
 // import User from './User';
 
@@ -18,15 +19,13 @@ export default class Main extends Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" component={Ranking} />
-          <Route exact path="/app" component={App} />
+          <Route exact path="/" component={BulletinBoard} />
           <Route exact path="/login" component={Login} />
-          {/* <Route exact path="/logout" component={Logout} /> */}
+          <Route exact path="/register" component={UserSearch} />
           <Auth>
+            {/* ログイン必須ページ */}
             <Switch>
-              {/* <Route exact path="/list1" component={List1} />
-              <Route exact path="/list2" component={List2} />
-              <Redirect from="/" to="/List1" /> */}
+              <Route exact path="/logout" component={App} />
             </Switch>
           </Auth>
         </Switch>
