@@ -2,32 +2,21 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 
 import Header from './parts/header';
+import Platform from './parts/platform';
+import User from './auth/User';
 
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import { Checkbox } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
+// import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 
 export default function BulletinBoard() {
 
-    const [selected_platform, set_selected_platform] = useState('playstation');
-    const [error_data, set_error_data] = useState('');
     const [tag, setTag] = useState('');
     const [device, set_device] = useState('pc');
 
     const { register, handleSubmit, errors } = useForm();
-
-    const useStyles = makeStyles((theme) => ({
-        selected_platform: {
-            backgroundColor: 'black',
-            borderRadius: 0,
-        },
-        margin: {
-            margin: theme.spacing(1),
-        },
-    }));
-    const classes = useStyles();
 
     window.onload = function() {
         if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
@@ -42,6 +31,7 @@ export default function BulletinBoard() {
             playerName: argument.player_name,
             comment: argument.comment,
         }
+        console.log(data);
     }
 
     function changeTag(e){
@@ -49,40 +39,19 @@ export default function BulletinBoard() {
         if ( tag.indexOf(value) !== -1) {
             value = tag.replace(','+value, '');
             setTag(value);
-        } else {            
+        } else {
             setTag(tag + ',' + value);
-        }        
+        }
     }
 
     return(
         <div>
+            {console.log(User.get('id'))}
             <Header />
             <div className="select_platform">
-                <div className="select_platform_form">
+                <div className="select_platform_form select_platform_left_form">
                     <div className="select_platform_left_form">
-                        <ul>
-                            <li className={selected_platform === 'steam' ? classes.selected_platform : ''}
-                                onClick={() => set_selected_platform('steam')}
-                            >
-                                <IconButton>
-                                    <i className="fab fa-steam"></i>
-                                </IconButton>
-                            </li>
-                            <li className={selected_platform === 'xbox' ? classes.selected_platform : ''}
-                                onClick={() => set_selected_platform('xbox')}
-                            >
-                                <IconButton>
-                                    <i className="fab fa-xbox"></i>
-                                </IconButton>
-                            </li>
-                            <li className={selected_platform === 'playstation' ? classes.selected_platform : ''}
-                                onClick={() => set_selected_platform('playstation')}
-                            >
-                                <IconButton>
-                                    <i className="fab fa-playstation"></i>
-                                </IconButton>
-                            </li>
-                        </ul>
+                        <Platform />
                         {device === 'pc' && (
                         <div className="conditions">
                             <h4>絞り込み</h4>
@@ -129,15 +98,19 @@ export default function BulletinBoard() {
                             <div>
                                 <label className="bulletinBoard_checkBox_form">
                                     <Checkbox className="bulletinBoard_checkBox" color="primary"　size="small" />
-                                    <span>ランクの近い人</span>
+                                    <span>エンジョイ勢</span>
                                 </label>
                                 <label className="bulletinBoard_checkBox_form">
                                     <Checkbox className="bulletinBoard_checkBox" color="primary"　size="small" />
-                                    <span>レベルの近い人</span>
+                                    <span>ガチ勢</span>
                                 </label>
                                 <label className="bulletinBoard_checkBox_form">
                                     <Checkbox className="bulletinBoard_checkBox" color="primary"　size="small" />
-                                    <span>キルレートの近い人</span>
+                                    <span>社会人</span>
+                                </label>
+                                <label className="bulletinBoard_checkBox_form">
+                                    <Checkbox className="bulletinBoard_checkBox" color="primary"　size="small" />
+                                    <span>学生</span>
                                 </label>
                             </div>
 
@@ -145,6 +118,25 @@ export default function BulletinBoard() {
                                 <label className="bulletinBoard_checkBox_form">
                                     <Checkbox className="bulletinBoard_checkBox" color="primary"　size="small" />
                                     <span>その他</span>
+                                </label>
+                            </div>
+
+                            <div>
+                                <h5>ログインユーザー限定</h5>
+                                <label className="bulletinBoard_checkBox_form">
+                                    <Checkbox className="bulletinBoard_checkBox" color="primary"　size="small" 
+                                        disabled={User.isLoggedIn() ? true : false} />
+                                    <span>ランクの近い人</span>
+                                </label>
+                                <label className="bulletinBoard_checkBox_form">
+                                    <Checkbox className="bulletinBoard_checkBox" color="primary"　size="small"
+                                        disabled={User.isLoggedIn() ? true : false} />
+                                    <span>レベルの近い人</span>
+                                </label>
+                                <label className="bulletinBoard_checkBox_form">
+                                    <Checkbox className="bulletinBoard_checkBox" color="primary"　size="small"
+                                        disabled={User.isLoggedIn() ? true : false} />
+                                    <span>キルレートの近い人</span>
                                 </label>
                             </div>
                         </div>
@@ -195,10 +187,10 @@ export default function BulletinBoard() {
                             <span>ここに文章ここに文章ここに文章ここに文章</span>
                             <div className="bottom_form">
                                 <Button variant="contained">返信</Button>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

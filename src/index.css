@@ -55,9 +55,14 @@ code {
   width: 80%;
 }
 
-.select_platform  .select_platform_form li{
-  width: 33.333333%;
+.select_platform .select_platform_form li{
+  width: 25%;
   float: left;
+}
+
+.select_platform .select_platform_form p {
+    margin: 0;
+    font-size: 25px;
 }
 
 .select_platform_form li button {
@@ -120,7 +125,7 @@ code {
 }
 
 .select_platform_left_form {
-  width: 30%;
+  width: 35%;
 }
 
 .tag_form {
@@ -168,7 +173,7 @@ code {
   }
 
   .select_platform_form li{
-    width: 33.333333% !important;
+    width: 25% !important;
     float: left !important;
   }
 

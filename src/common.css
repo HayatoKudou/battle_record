@@ -1,6 +1,5 @@
 .conditions{
-    padding-left: 10px;
-    padding: 0.5em 1em;
+    padding: 10px 0 10px 5px;
     margin: 1em 0;
     background: #f4f4f4;
     border-left: solid 6px #5bb7ae;
@@ -17,8 +16,12 @@
 }
 
 .conditions h4 {
-    margin: 0; 
+    margin: 0 0 10px 5px;
     padding: 0;
+}
+
+.conditions h5 {
+    margin: 15px 0 5px 5px;
 }
 
 .flame10 {

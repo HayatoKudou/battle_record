@@ -13,7 +13,8 @@ class User {
       return null;
     };
   
-    login = async (email, password) => {
+    // login = async (email, password) => {
+    login = async () => {
       // ログイン処理
       // ログインエラー時には、falseを返してもいいし、returnを別の用途で利用したかったら
       // 例外を出しして呼び出し元でcatchしてもいいかと思います。
