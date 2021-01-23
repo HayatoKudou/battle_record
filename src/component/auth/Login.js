@@ -57,7 +57,7 @@ export default function Login() {
     const { register, handleSubmit, errors } = useForm();
     const [error, set_error] = useState('');
 
-    function login(argument) {
+    function setLogin(argument) {
         var data = {
             email: argument.email,
             password: argument.password,
@@ -69,21 +69,25 @@ export default function Login() {
             },
             body: JSON.stringify(data),
         })
-            .then(response => {
-                if (!response.ok) {
-                    set_error('ユーザーが見つかりません');
-                } else {
-                    return response.json().then(userInfo => {
-                        User.set('id', userInfo.user.id);
+        .then(response => {
+            if (!response.ok) {
+                set_error('ユーザーが見つかりません');
+            } else {
+                return response.json().then(userInfo => {
+                    if('errors' in userInfo){
+                        set_error(userInfo.errors);
+                    } else {
+                        console.log(userInfo.user);
                         User.set('api_token', userInfo.token);
-                        User.login();                        
-                        console.log(userInfo);
+                        User.setArr('user', userInfo.user);
+                        User.login();
                         history.push('/');
-                    });                    
-                }
-            }).catch(error => {
-                console.error(error);
-            });
+                    }
+                });
+            }
+        }).catch(error => {
+            console.error(error);
+        });
     }
 
 	return (
@@ -96,8 +100,8 @@ export default function Login() {
 				<Typography component="h1" variant="h5">ログイン画面</Typography>
                 {error !== '' && (
                     <Typography color="error">{error}</Typography>
-                )}                
-				<form onSubmit={handleSubmit(login)} className="player_name_form">
+                )}
+				<form onSubmit={handleSubmit(setLogin)} className="player_name_form">
 					<TextField
 						variant="outlined"
 						margin="normal"

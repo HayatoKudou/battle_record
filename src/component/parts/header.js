@@ -12,7 +12,8 @@ import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import User from '../auth/User';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,13 +32,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MenuAppBar() {
     const classes = useStyles();
-    const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
-
-    const handleChange = (event) => {
-        setAuth(event.target.checked);
-    };
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -49,12 +45,6 @@ export default function MenuAppBar() {
 
     return (
         <div className={classes.root}>
-            <FormGroup>
-                <FormControlLabel
-                    control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
-                    label={auth ? 'Logout' : 'Login'}
-                />
-            </FormGroup>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
@@ -72,7 +62,13 @@ export default function MenuAppBar() {
                             color="inherit"
                         >
                             <AccountCircle />
-                            <span className={classes.userName}>ゲストユーザー</span>
+                            <span className={classes.userName}>
+                                {User.isLoggedIn() ?                                    
+                                    JSON.parse(User.getLocalStorage('user')).name
+                                :
+                                    'ゲストユーザー'
+                                }
+                            </span>
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -89,10 +85,10 @@ export default function MenuAppBar() {
                             open={open}
                             onClose={handleClose}
                         >
-                            {auth === true ? (
+                            {User.isLoggedIn() === true ? (
                                 <div>
-                                    <MenuItem><Link to="/profile" className="route_link">プロフィール</Link></MenuItem>
-                                    <MenuItem><Link to="/logout" className="route_link">ログアウト</Link></MenuItem>
+                                    {/* <MenuItem><Link to="/profile" className="route_link">プロフィール</Link></MenuItem> */}
+                                    <MenuItem onClick={() => User.logout()}>ログアウト</MenuItem>
                                 </div>)
                                 :
                                 (<div>

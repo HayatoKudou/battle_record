@@ -56,6 +56,27 @@
     color: black;
 }
 
+.tag_form label {
+    display: inline-block;
+    cursor: pointer;
+    margin: 3px;
+}
+.tag_form label input {
+    display: none; /* デフォルトのinputは非表示にする */
+}
+.tag_form label span {
+    color: #527ffb; /* 文字色を黒に */
+    font-size: 13px; /* 文字サイズを14pxに */
+    border: 1px solid #527ffb; /* 淵の線を指定 */
+    border-radius: 4px;
+    padding: 4px 7px;
+}
+.tag_form label input:checked + span {
+    color: #527ffb;
+    background: #c2cefb;
+    border: #527ffb;
+}
+
 
 @media screen and (max-width: 600px) {
     .flame10 {

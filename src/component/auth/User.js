@@ -2,6 +2,7 @@ class User {
     isLoggedIn = () => this.get('isLoggedIn') === 'true';
   
     set = (key, value) => localStorage.setItem(key, value);
+    setArr = (key, value) => localStorage.setItem(key, JSON.stringify(value));
   
     get = key => this.getLocalStorage(key);
   

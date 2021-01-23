@@ -25,6 +25,10 @@ code {
   width: 100%;
 }
 
+.player_name_form .error_message {
+    font-size: 15px;
+}
+
 .player_name_form .post {
   width: 100%;
   margin-left: 30px;
@@ -42,7 +46,7 @@ code {
 .coment_input {
   padding: 0;
   margin-left: 30px !important;
-  margin-top: 15px !important;
+  margin-top: 10px !important;
 }
 .select_platform {
   margin-top: 30px;
@@ -130,19 +134,19 @@ code {
 
 .tag_form {
   margin-left: 30px;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
-.tag_form button {
+/* .tag_form button {
   color: #3f51b5;
-  padding: 3px;
-  margin: 3px;
+  padding: 2px;
+  margin: 2px;
   font-size: 13px;
-}
+} */
 
-.tag_form .tag_checked {
+/* .tag_form .tag_checked {
   background-color: #acb6f3;
-}
+} */
 
 
 
