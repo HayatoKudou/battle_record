@@ -34,6 +34,11 @@
     margin-left: 30px;    
 }
 
+.flame10 .replay_id {
+    font-size: 17px !important;
+    color: red;
+}
+
 .flame10 h5 {
     margin: 0;
     margin-right: 20px;
@@ -43,12 +48,13 @@
     display: flex;
 }
 
-.flame10 .top_form span {
-    font-size: 15px;
+.flame10 span {
+    font-size: 13px;
 }
 
 .flame10 .bottom_form {
     text-align: right;
+    margin-top: 5px;
 }
 
 .flame10 .bottom_form button {

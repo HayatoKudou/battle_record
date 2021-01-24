@@ -85,7 +85,6 @@ export default function Register() {
                     if('errors' in userInfo){
                         set_error(userInfo.errors);
                     } else {
-                        console.log(userInfo.user);
                         User.set('api_token', userInfo.token);
                         User.setArr('user', userInfo.user);
                         User.login();

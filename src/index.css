@@ -70,6 +70,7 @@ code {
 }
 
 .select_platform_form li button {
+  padding: 15px;
   display: block;
   margin: 0 auto;
 }
@@ -85,7 +86,7 @@ code {
 }
 
 .select_platform button {
-  padding-top: 15px;
+  padding: 15 0 0 0;
   color: white;
 }
 
@@ -137,6 +138,24 @@ code {
   margin-top: 10px;
 }
 
+.select_platform_center_form {
+    width: 95%;
+}
+
+.reply_id {    
+    margin-top: 10px !important;
+    margin-left: 30px !important;
+}
+
+.reply_id p {
+    font-size: 17px !important;
+}
+
+.reply_id i {
+    cursor: pointer;
+    margin-left: 5px;
+}
+
 /* .tag_form button {
   color: #3f51b5;
   padding: 2px;
@@ -182,6 +201,7 @@ code {
   }
 
   .select_platform_form li button {
+    padding: 15px;
     display: block;
     margin: 0 auto;
   }
