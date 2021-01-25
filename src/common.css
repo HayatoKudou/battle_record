@@ -11,11 +11,12 @@
 }
 
 .conditions p {
-    margin: 0; 
+    margin: 0;
     padding: 0;
 }
 
 .conditions h4 {
+    display: inline-block;
     margin: 0 0 10px 5px;
     padding: 0;
 }
@@ -24,42 +25,86 @@
     margin: 15px 0 5px 5px;
 }
 
-.flame10 {
+.article_flame {
     padding: 1em;
     margin: 0.5em auto;
     width:100%;
     color: #696969;
     background: #ffffe0;
     border-left: solid 15px #ff8c00;
-    margin-left: 30px;    
+    margin-left: 30px;
 }
 
-.flame10 .replay_id {
+.article_flame .article_reply {
     font-size: 17px !important;
     color: red;
 }
 
-.flame10 h5 {
-    margin: 0;
-    margin-right: 20px;
+.article_flame h5 {
+    margin: 0;    
+    margin-right: 10px;
 }
 
-.flame10 .top_form {
+.article_flame .top_form {
+    align-items: center;
     display: flex;
 }
 
-.flame10 span {
-    font-size: 13px;
+.article_flame .top_form span {
+    font-size: 14px;
+    margin-left: 20px;
 }
 
-.flame10 .bottom_form {
+.article_flame .comment {
+    font-weight: bold;
+}
+
+.article_flame .comment {
+    font-weight: bold;
+    margin-top: 5px !important;
+}
+
+.article_flame p {
+    font-size: 13px !important;
+}
+
+.bottom_form {
+    position: relative;
+}
+
+.bottom_form .tag_boxs {
+    width: 70%;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.bottom_form .action_form {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.article_flame .action_form {
     text-align: right;
     margin-top: 5px;
+    align-items: center;
+    display: flex;
+    float: right;
 }
 
-.flame10 .bottom_form button {
+.article_flame .action_form button {
+    margin: 0 5px 0 5px;
     padding: 3px 10px 3px 10px;
-    color: black;
+    color: white;
+}
+
+.article_flame .action_form svg {
+    margin-right: 10px;
+}
+
+.article_flame .action_form button span {
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .tag_form label {
@@ -84,13 +129,48 @@
 }
 
 
+.tag_box {
+    padding: 3px;
+    color: #2c2c2f;
+    background: #cde4ff;
+    display: inline-block;
+    border-radius: 6px;
+    margin: 3px;
+}
+.tag_box p {
+    font-size: 10px !important;
+    font-weight: bold;
+}
+
+
 @media screen and (max-width: 600px) {
-    .flame10 {
+    .article_flame {
         margin-left: 0px !important;
         width: auto !important;
         padding-bottom: 10px !important;
+        padding: 10px !important;
     }
-    .flame10 span {
-        font-size: 13px;
+    .article_flame span {
+        font-size: 13px !important;
+    }
+    .article_flame h5 {
+        font-size: 15px !important;
+    }
+    
+    .conditions h4 {
+        font-weight: 500 !important;
+        margin: 0 0 0px 5px !important;
+        font-size: 15px;
+    }
+
+    .conditions .display_icon {
+        color: black;
+        float: right;
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+
+    .bottom_form .tag_boxs {
+        width: 100% !important;
     }
 }

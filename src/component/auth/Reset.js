@@ -50,19 +50,18 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Login() {
+export default function Reset() {
 
     const history = useHistory();
 	const classes = useStyles();
     const { register, handleSubmit, errors } = useForm();
     const [error, set_error] = useState('');
 
-    function setLogin(argument) {
+    function passwordReset(argument) {
         var data = {
             email: argument.email,
-            password: argument.password,
         }
-        fetch('http://battle_record_api/api/login', {
+        fetch('http://battle_record_api/api/password/reset', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -79,8 +78,8 @@ export default function Login() {
                     } else {
                         User.set('api_token', userInfo.token);
                         User.setArr('user', userInfo.user);
-                        User.login();
-                        history.push('/');
+                        // User.login();
+                        // history.push('/');
                     }
                 });
             }
@@ -96,11 +95,11 @@ export default function Login() {
 				<Avatar className={classes.avatar}>
 					<LockOutlinedIcon />
 				</Avatar>
-				<Typography component="h1" variant="h5">ログイン</Typography>
+				<Typography component="h1" variant="h5">パスワードリセット</Typography>
                 {error !== '' && (
                     <Typography color="error">{error}</Typography>
                 )}
-				<form onSubmit={handleSubmit(setLogin)} className="player_name_form">
+				<form onSubmit={handleSubmit(passwordReset)} className="player_name_form">
 					<TextField
 						variant="outlined"
 						margin="normal"
@@ -130,12 +129,23 @@ export default function Login() {
 						error={errors.password || error !== '' ? true : false}
 						inputRef={register({ required: true })}
 						helperText={
-							errors.password && <span>メールアドレスを入力してください。</span>
+							errors.password && <span>パスワードを入力してください。</span>
 						}
 					/>
-					<FormControlLabel
-						control={<Checkbox value="remember" color="primary" />}
-						label="パスワードを保存する"
+                    <TextField
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
+						name="confirm_password"
+						label="パスワード再確認"
+						type="password"
+						autoComplete="current-password"
+						error={errors.confirm_password || error !== '' ? true : false}
+						inputRef={register({ required: true })}
+						helperText={
+							errors.confirm_password && <span>パスワード再確認を入力してください。</span>
+						}
 					/>
 					<Button
 						type="submit"
@@ -143,14 +153,9 @@ export default function Login() {
 						variant="contained"
 						color="primary"
 						className={classes.submit}
-					>ログイン
+					>リセット
 					</Button>
 					<Grid container>
-						<Grid item xs>
-							<Link href="/reset" variant="body2">
-								パスワードを忘れた場合
-							</Link>
-						</Grid>
 						<Grid item>
 							<Link href="/register" variant="body2">
 								アカウントを作成する

@@ -34,9 +34,10 @@ code {
   margin-left: 30px;
   margin-top: 15px;
   padding: 7px;
-  color: black;
+  color: white;
   font-size: 17px;
-  margin-bottom: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .player_name_input {
@@ -149,6 +150,7 @@ code {
 
 .reply_id p {
     font-size: 17px !important;
+    /* color: red; */
 }
 
 .reply_id i {
@@ -167,6 +169,13 @@ code {
   background-color: #acb6f3;
 } */
 
+.keyword_search_form input {
+    margin: 10px;
+}
+
+.keyword_search_form button {
+    color: black;
+}
 
 
 
