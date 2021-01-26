@@ -85,10 +85,9 @@ export default function Register() {
                     if('errors' in userInfo){
                         set_error(userInfo.errors);
                     } else {
-                        User.set('api_token', userInfo.token);
                         User.setArr('user', userInfo.user);
                         User.login();
-                        history.push('/');
+                        history.push('/', {articles: userInfo.articles});
                     }
                 });
             }

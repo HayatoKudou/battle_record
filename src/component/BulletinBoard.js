@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useForm } from "react-hook-form";
+import {　useLocation　} from 'react-router-dom';
 
 import Header from './parts/header';
 import User from './auth/User';
@@ -68,12 +69,9 @@ function zeroPadding(num,length){
 
 export default function BulletinBoard() {
 
+    let location = useLocation();
+
     window.onload = function() {
-        if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
-            set_device('smartphone');
-        } else {
-            set_device('pc');
-        }
 
         var data = {
             user_id: JSON.parse(User.getLocalStorage('user')).id,
@@ -91,22 +89,20 @@ export default function BulletinBoard() {
                     if('errors' in data){
                         set_error(data.errors);
                     } else {
-                        console.log(data.apex_player);
                         set_articles(data.articles);
                         set_filtered_articles(data.articles);
                     }
                 });
             }
         }).catch(error => {
-            console.error(error);
+            set_error(error);
         })
     }
 
     const classes = useStyles();
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit, errors, reset } = useForm();
 
     const [error, set_error] = useState('');
-    const [device, set_device] = useState('pc');
     const [reply_id, set_reply_id] = useState('');
     const [reply_name, set_reply_name] = useState('');
     const [selected_platform, set_selected_platform] = useState('all'); //絞り込み用
@@ -114,7 +110,9 @@ export default function BulletinBoard() {
     const [filter_tag, set_filter_tag] = useState([]); //絞り込み用
     const [keyword, set_keyword] = useState([]); //絞り込み用
     const [post_platform, set_post_platform] = useState(''); //投稿用
-    const [articles, set_articles] = useState([]); //絞り込み前
+    // const [articles, set_articles] = useState([]); //絞り込み前
+    // console.log(location);
+    const [articles, set_articles] = useState(typeof location.state !== 'undefined' ? location.state.articles : []); //絞り込み前
     const [filtered_articles, set_filtered_articles] = useState([]); //絞り込み後
     const [detail_display, set_detail_display] = useState(false); //絞り込み後
 
@@ -204,36 +202,75 @@ export default function BulletinBoard() {
 
     //投稿
     function post(argument){
-        var data = {
-            reply_id: reply_id,
-            player_id: User.isLoggedIn() ? JSON.parse(User.getLocalStorage('user')).id  : null,
-            player_name: argument.player_name,
-            platform: post_platform,
-            tag: post_tag,
-            comment: argument.comment
-        }
-        fetch('http://battle_record_api/api/apex_post', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json',},
-            body: JSON.stringify(data),
-        })
-        .then(response => {
-            if (!response.ok) {
-                set_error(response);
-            } else {
-                return response.json().then(data => {
-                    if('errors' in data){
-                        set_error(data.errors);
-                    } else {
-                        set_articles(data.articles);
-                        var tmpArticle = filter(data.articles);
-                        set_filtered_articles(tmpArticle);
-                    }
-                });
+        if(window.confirm("投稿しますか?")){
+            var data = {
+                reply_id: reply_id,
+                player_id: User.isLoggedIn() ? JSON.parse(User.getLocalStorage('user')).id  : localStorage.getItem("user") === null ? null : JSON.parse(User.getLocalStorage('user')).id,
+                player_name: argument.player_name,
+                platform: post_platform,
+                tag: post_tag,
+                comment: argument.comment
             }
-        }).catch(error => {
-            console.error(error);
-        })
+            fetch('http://battle_record_api/api/apex_post', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json',},
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    set_error(response);
+                } else {
+                    return response.json().then(data => {
+                        if('errors' in data){
+                            set_error(data.errors);
+                        } else {
+                            set_articles(data.articles);
+                            var tmpArticle = filter(data.articles);
+                            set_filtered_articles(tmpArticle);
+                            reset({ comment: "" });
+                            //ゲストユーザーのローカル保存
+                            if('guest_user' in data){
+                                User.setArr('user', data.guest_user);
+                            }                            
+                        }
+                    });
+                }
+            }).catch(error => {
+                set_error(error);
+            })
+        }
+    }
+
+    //記事削除
+    function deleteArticle(article_id){
+        if(window.confirm("削除しますか?")){
+            var data = {
+                article_id: article_id,
+                user_id:  JSON.parse(User.getLocalStorage('user')).id,
+            }
+            fetch('http://battle_record_api/api/apex_delete_article', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json',},
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    set_error(response);
+                } else {
+                    return response.json().then(data => {
+                        if('errors' in data){
+                            set_error(data.errors);
+                        } else {
+                            set_articles(data.articles);
+                            var tmpArticle = filter(data.articles);
+                            set_filtered_articles(tmpArticle);                 
+                        }
+                    });
+                }
+            }).catch(error => {
+                set_error(error);
+            })
+        }
     }
 
     function changeTag(e){
@@ -288,15 +325,15 @@ export default function BulletinBoard() {
                                 <IconButton className={classes.all}><p>ALL</p></IconButton>
                             </li>
                         </ul>
-                        {/* {device === 'pc' && ( */}
+                        {/* {User.get('device') === 'pc' && ( */}
                         <div className="conditions">
                             <h4>絞り込み</h4>
-                            {device !== 'pc' && (
+                            {User.get('device') !== 'pc' && (
                                 <IconButton className="display_icon" onClick={() => set_detail_display(detail_display ? false : true)}>
-                                    {detail_display ? (<i class="fas fa-angle-down"></i>) : (<i class="fas fa-angle-up"></i>)}
+                                    {detail_display ? (<i className="fas fa-angle-down"></i>) : (<i className="fas fa-angle-up"></i>)}
                                 </IconButton>
                             )}
-                            <div className={!detail_display && device !== 'pc' ? classes.none : classes.block}>
+                            <div className={!detail_display && User.get('device') !== 'pc' ? classes.none : classes.block}>
                                 <div>
                                     <label className="bulletinBoard_checkBox_form">
                                         <Checkbox className="bulletinBoard_checkBox" color="primary"　size="small"
@@ -372,7 +409,7 @@ export default function BulletinBoard() {
                                     </div>
                                 </div>
 
-                                {/* <div>
+                                <div>
                                     <h5>ログインユーザー限定</h5>
                                     <label className="bulletinBoard_checkBox_form">
                                         <Checkbox className="bulletinBoard_checkBox" color="primary"　size="small"
@@ -384,12 +421,7 @@ export default function BulletinBoard() {
                                             disabled={User.isLoggedIn() ? false : true} />
                                         <span>レベルの近い人</span>
                                     </label>
-                                    <label className="bulletinBoard_checkBox_form">
-                                        <Checkbox className="bulletinBoard_checkBox" color="primary"　size="small"
-                                            disabled={User.isLoggedIn() ? false : true} />
-                                        <span>キルレートの近い人</span>
-                                    </label>
-                                </div> */}
+                                </div>
                             </div>
                         </div>
                         {/* )} */}
@@ -448,7 +480,7 @@ export default function BulletinBoard() {
                                     </Typography>
                                 </div>
                             }
-                            <TextField className="coment_input" variant="outlined" name="comment" multiline rows={device === 'pc' ? 3 : 2}
+                            <TextField className="coment_input" variant="outlined" name="comment" multiline rows={User.get('device') === 'pc' ? 3 : 2}
                                 error={errors.comment ? true : false}
                                 inputRef={register({ required: true })}
                                 helperText={
@@ -457,7 +489,6 @@ export default function BulletinBoard() {
                                 label={'コメント'}
                             />
                             <Button onClick={handleSubmit(post)} className="post" variant="contained" color="primary">投稿する</Button>
-
                         </form>
 
                         {Object.keys(filtered_articles).map(key => {
@@ -479,23 +510,23 @@ export default function BulletinBoard() {
 
                                     <div className="bottom_form">
                                         <div className="tag_boxs">
-                                            {filtered_articles[key].tag_vc_yes ? (<div className="tag_box"><p>VC有り</p></div>) : ''}
-                                            {filtered_articles[key].tag_vc_no ? (<div className="tag_box"><p>VC無し</p></div>) : ''}
-                                            {filtered_articles[key].tag_cooperation ? (<div className="tag_box"><p>VC協力プレイ</p></div>) : ''}
-                                            {filtered_articles[key].tag_friend ? (<div className="tag_box"><p>フレンド募集</p></div>) : ''}
-                                            {filtered_articles[key].tag_clan ? (<div className="tag_box"><p>クラメン募集</p></div>) : ''}
-                                            {filtered_articles[key].tag_rank ? (<div className="tag_box"><p>ランクマッチ</p></div>) : ''}
-                                            {filtered_articles[key].tag_quick ? (<div className="tag_box"><p>クイックマッチ</p></div>) : ''}
-                                            {filtered_articles[key].tag_event ? (<div className="tag_box"><p>イベントマッチ</p></div>) : ''}
-                                            {filtered_articles[key].tag_enjoy ? (<div className="tag_box"><p>エンジョイ勢</p></div>) : ''}
-                                            {filtered_articles[key].tag_seriously ? (<div className="tag_box"><p>ガチ勢</p></div>) : ''}
-                                            {filtered_articles[key].tag_society ? (<div className="tag_box"><p>社会人</p></div>) : ''}
-                                            {filtered_articles[key].tag_student ? (<div className="tag_box"><p>学生</p></div>) : ''}
+                                            {filtered_articles[key].tag_vc_yes ? (<div className="tag_box"><p>#VC有り</p></div>) : ''}
+                                            {filtered_articles[key].tag_vc_no ? (<div className="tag_box"><p>#VC無し</p></div>) : ''}
+                                            {filtered_articles[key].tag_cooperation ? (<div className="tag_box"><p>#VC協力プレイ</p></div>) : ''}
+                                            {filtered_articles[key].tag_friend ? (<div className="tag_box"><p>#フレンド募集</p></div>) : ''}
+                                            {filtered_articles[key].tag_clan ? (<div className="tag_box"><p>#クラメン募集</p></div>) : ''}
+                                            {filtered_articles[key].tag_rank ? (<div className="tag_box"><p>#ランクマッチ</p></div>) : ''}
+                                            {filtered_articles[key].tag_quick ? (<div className="tag_box"><p>#クイックマッチ</p></div>) : ''}
+                                            {filtered_articles[key].tag_event ? (<div className="tag_box"><p>#イベントマッチ</p></div>) : ''}
+                                            {filtered_articles[key].tag_enjoy ? (<div className="tag_box"><p>#エンジョイ勢</p></div>) : ''}
+                                            {filtered_articles[key].tag_seriously ? (<div className="tag_box"><p>#ガチ勢</p></div>) : ''}
+                                            {filtered_articles[key].tag_society ? (<div className="tag_box"><p>#社会人</p></div>) : ''}
+                                            {filtered_articles[key].tag_student ? (<div className="tag_box"><p>#学生</p></div>) : ''}
                                         </div>
 
                                         <div className="action_form">
-                                            {(User.isLoggedIn() && JSON.parse(User.getLocalStorage('user')).id === filtered_articles[key].user_id) &&
-                                                (<DeleteForeverIcon />)
+                                            {JSON.parse(User.getLocalStorage('user')).id === filtered_articles[key].user_id &&
+                                                (<DeleteForeverIcon className="delete_icon" onClick={() => deleteArticle(filtered_articles[key].id)} />)
                                             }
                                             {/* <Button onClick={() => reply(filtered_articles[key].id, filtered_articles[key].user_name)} variant="contained">通報</Button> */}
                                             {filtered_articles[key].reply_count !== 0 &&

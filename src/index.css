@@ -170,6 +170,7 @@ code {
 } */
 
 .keyword_search_form input {
+    width: 70%;
     margin: 10px;
 }
 
@@ -243,4 +244,9 @@ code {
     margin-bottom: 20px;
     font-size: 13px;
   }
+
+  .keyword_search_form input {
+    width: 80% !important;
+  }
+
 }
