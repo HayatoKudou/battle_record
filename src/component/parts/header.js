@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import User from '../auth/User';
+import { diffDate } from '../../common';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -59,7 +60,7 @@ export default function MenuAppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const [left_open, set_left_open] = useState(false);
-    const [badge_open, set_badge_open] = useState(false);    
+    const [badge_open, set_badge_open] = useState(false);
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -86,8 +87,7 @@ export default function MenuAppBar() {
                     if('errors' in data){
                         console.log(data.errors);
                     } else {
-                        console.log(data);
-                        User.set('notice', 0);
+                        User.set('notice', data.notice);
                     }
                 });
             }
@@ -150,24 +150,33 @@ export default function MenuAppBar() {
                     </Drawer>
 
                     <Typography variant="h6" className={User.get('device') === 'pc' ? classes.title_pc : classes.title_smartphone + ' header_title'}>
-                        {User.get('device') === 'pc' ? 'Apex Legends エーペックスレジェンズ掲示板' : 'エーペックスレジェンズ掲示板'}
+                        {'Apex Legends エーペックスレジェンズ掲示板'}
                     </Typography>
                     <div>
                         <div className={classes.header_icons}>
                             <IconButton className={User.get('device') === 'smartphone' ? classes.header_icon_smart : ''} aria-label="show 17 new notifications" color="inherit" onClick={() => {set_badge_open(true);clearNotice()}}>
-                            <Badge badgeContent={User.getLocalStorage('notice')} color="secondary" max={99}>
+                            <Badge badgeContent={JSON.parse(User.getLocalStorage('notice')) != null ? JSON.parse(User.getLocalStorage('notice')).length : 0} color="secondary" max={99}>
                                 <MailIcon  />
                             </Badge>
 
-                            {badge_open ? (
-                            <ClickAwayListener onClickAway={() => set_badge_open(false)}>
-                                <Paper className="paper">
-                                    {User.getLocalStorage('notice') + '件の返信があります'}
-                                </Paper>
-                            </ClickAwayListener>
-                            ) : null}
+                            {badge_open && (
+                                JSON.parse(User.getLocalStorage('notice')) != null && JSON.parse(User.getLocalStorage('notice')).length !== 0 ? (
+                                    <ClickAwayListener onClickAway={() => set_badge_open(false)}>
+                                        <Paper className="paper">
+                                            {JSON.parse(User.getLocalStorage('notice')).map(key => (
+                                                <div key={key.id}>
+                                                    {diffDate(key.created_at) + ': '}{key.notice}
+                                                </div>
+                                            ))}
+                                        </Paper>
+                                    </ClickAwayListener>)
+                                :
+                                (<ClickAwayListener onClickAway={() => set_badge_open(false)}>
+                                    <Paper className="paper">お知らせはありません。</Paper>
+                                </ClickAwayListener>)
+                            )}
 
-                            </IconButton>                            
+                            </IconButton>
                             <IconButton
                                 className={User.get('device') === 'smartphone' ? classes.header_icon_smart : ''}
                                 aria-label="account of current user"
@@ -205,7 +214,7 @@ export default function MenuAppBar() {
                             {User.isLoggedIn() === true ? (
                                 <div>
                                     {/* <MenuItem><Link to="/profile" className="route_link">プロフィール</Link></MenuItem> */}
-                                    <MenuItem onClick={() => User.logout()}>ログアウト</MenuItem>
+                                    <MenuItem onClick={() => {User.logout();window.location.reload();}}>ログアウト</MenuItem>
                                 </div>)
                                 :
                                 (<div>

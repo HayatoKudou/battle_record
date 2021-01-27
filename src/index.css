@@ -134,11 +134,6 @@ code {
   width: 35%;
 }
 
-.tag_form {
-  margin-left: 30px;
-  margin-top: 10px;
-}
-
 .select_platform_center_form {
     width: 95%;
 }
@@ -176,6 +171,18 @@ code {
 
 .keyword_search_form button {
     color: black;
+}
+
+.clear_condition {
+    margin-left: 30px;
+    text-align: right;
+}
+
+.clear_condition_button {
+    color: black !important;
+    padding: 7px;
+    font-size: 13px !important;
+    font-weight: bold !important;
 }
 
 

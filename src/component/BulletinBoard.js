@@ -4,6 +4,7 @@ import {　useLocation　} from 'react-router-dom';
 
 import Header from './parts/header';
 import User from './auth/User';
+import {dateFormat, diffDate, zeroPadding} from '../common';
 
 import { Checkbox } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -37,42 +38,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-//日付フォーマット
-function dateFormat(date, format) {
-    format = format.replace(/YYYY/, date.getFullYear());
-    format = format.replace(/MM/, date.getMonth() + 1);
-    format = format.replace(/DD/, date.getDate());
-    format = format.replace(/HH/, date.getHours());
-    format = format.replace(/MM/, date.getMinutes());
-    return format;
-}
-
-function diffDate(t1){
-    let t2 = new Date();
-    let diff = t2.getTime() - t1.getTime();
-    //HH部分取得
-    let diffHour = diff / (1000 * 60 * 60);
-    //MM部分取得
-    let diffMinute = (diffHour - Math.floor(diffHour)) * 60;
-    if(('00' + Math.floor(diffHour)).slice(-2) === '00'){
-        return ('00' + Math.floor(diffMinute)).slice(-2) + '分前';
-    } else {
-        return ('00' + Math.floor(diffHour)).slice(-2) + '時間' + ('00' + Math.floor(diffMinute)).slice(-2) + '分前';
-    }
-}
-
-//0埋め
-function zeroPadding(num,length){
-    return ('0000000000' + num).slice(-length);
-}
-
 
 export default function BulletinBoard() {
 
     let location = useLocation();
 
     window.onload = function() {
-
         var data = {
             user_id: JSON.parse(User.getLocalStorage('user')).id,
         }
@@ -110,8 +81,6 @@ export default function BulletinBoard() {
     const [filter_tag, set_filter_tag] = useState([]); //絞り込み用
     const [keyword, set_keyword] = useState([]); //絞り込み用
     const [post_platform, set_post_platform] = useState(''); //投稿用
-    // const [articles, set_articles] = useState([]); //絞り込み前
-    // console.log(location);
     const [articles, set_articles] = useState(typeof location.state !== 'undefined' ? location.state.articles : []); //絞り込み前
     const [filtered_articles, set_filtered_articles] = useState([]); //絞り込み後
     const [detail_display, set_detail_display] = useState(false); //絞り込み後
@@ -228,10 +197,12 @@ export default function BulletinBoard() {
                             var tmpArticle = filter(data.articles);
                             set_filtered_articles(tmpArticle);
                             reset({ comment: "" });
+                            set_reply_id('');
+                            set_reply_name('');
                             //ゲストユーザーのローカル保存
                             if('guest_user' in data){
                                 User.setArr('user', data.guest_user);
-                            }                            
+                            }
                         }
                     });
                 }
@@ -263,7 +234,7 @@ export default function BulletinBoard() {
                         } else {
                             set_articles(data.articles);
                             var tmpArticle = filter(data.articles);
-                            set_filtered_articles(tmpArticle);                 
+                            set_filtered_articles(tmpArticle);
                         }
                     });
                 }
@@ -409,7 +380,7 @@ export default function BulletinBoard() {
                                     </div>
                                 </div>
 
-                                <div>
+                                {/* <div>
                                     <h5>ログインユーザー限定</h5>
                                     <label className="bulletinBoard_checkBox_form">
                                         <Checkbox className="bulletinBoard_checkBox" color="primary"　size="small"
@@ -421,7 +392,7 @@ export default function BulletinBoard() {
                                             disabled={User.isLoggedIn() ? false : true} />
                                         <span>レベルの近い人</span>
                                     </label>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         {/* )} */}
@@ -448,15 +419,15 @@ export default function BulletinBoard() {
                             <div className="tag_form">
                                 <label>
                                     <input type="checkbox" value="pc" onClick={(e) => changePlatform(e)} />
-                                    <span>pc</span>
+                                    <span className="platform">pc</span>
                                 </label>
                                 <label>
                                     <input type="checkbox" value="xbox" onClick={(e) => changePlatform(e)} />
-                                    <span>xbox</span>
+                                    <span className="platform">xbox</span>
                                 </label>
                                 <label>
                                     <input type="checkbox" value="playstation" onClick={(e) => changePlatform(e)} />
-                                    <span>playstation</span>
+                                    <span className="platform">playstation</span>
                                 </label>
                                 <br/>
                                 <label><input type="checkbox" value="tag_vc_yes" onClick={(e) => changeTag(e)} /><span>VC有り</span></label>
@@ -489,10 +460,12 @@ export default function BulletinBoard() {
                                 label={'コメント'}
                             />
                             <Button onClick={handleSubmit(post)} className="post" variant="contained" color="primary">投稿する</Button>
+                            <div className="clear_condition">
+                                <Button className="clear_condition_button" variant="contained" onClick={() => setFilterQuery('')} >絞り込みを解除</Button>
+                            </div>                            
                         </form>
 
                         {Object.keys(filtered_articles).map(key => {
-                            var date = new Date(filtered_articles[key].created_at);
                             return (
                                 <div className="article_flame" key={key}>
                                     {(filtered_articles[key].reply_id !== null && filtered_articles[key].reply_id !== '' ) &&
@@ -504,7 +477,7 @@ export default function BulletinBoard() {
                                         filtered_articles[key].platform_pc ? (<i className="fab fa-steam"></i>) :
                                         filtered_articles[key].platform_xbox ? (<i className="fab fa-xbox"></i>) :
                                         filtered_articles[key].platform_playstation ? (<i className="fab fa-playstation"></i>) : ''}
-                                        <span>{diffDate(date)}</span>
+                                        <span>{diffDate(filtered_articles[key].created_at)}</span>
                                     </div>
                                     <p className="comment">{filtered_articles[key].comment}</p>
 
@@ -525,9 +498,12 @@ export default function BulletinBoard() {
                                         </div>
 
                                         <div className="action_form">
-                                            {JSON.parse(User.getLocalStorage('user')).id === filtered_articles[key].user_id &&
-                                                (<DeleteForeverIcon className="delete_icon" onClick={() => deleteArticle(filtered_articles[key].id)} />)
-                                            }
+                                            {JSON.parse(User.getLocalStorage('user')).id === filtered_articles[key].user_id && (
+                                                <div className="action_icon_form">
+                                                    <i className="fab fa-twitter"></i>
+                                                    <DeleteForeverIcon className="delete_icon" onClick={() => deleteArticle(filtered_articles[key].id)} />
+                                                </div>
+                                            )}
                                             {/* <Button onClick={() => reply(filtered_articles[key].id, filtered_articles[key].user_name)} variant="contained">通報</Button> */}
                                             {filtered_articles[key].reply_count !== 0 &&
                                                 (<Button onClick={() => handleFilter('reply', filtered_articles[key].id)} variant="contained" color="secondary">{filtered_articles[key].reply_count + '件返信があります'}</Button>)

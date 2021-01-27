@@ -38,8 +38,9 @@ function usePageViews() {
                 if('errors' in data){
                     console.log(data.errors);
                 } else {
-                    console.log(data);
-                    User.set('notice', data.count);
+                    if('notice' in data){
+                        User.setArr('notice', data.notice);
+                    }
                 }
             });
         }
@@ -59,7 +60,7 @@ function RouterApp() {
             <Auth>
                 {/* ログイン必須ページ */}
                 <Switch>
-                    <Route exact path="/logout" component={App} />
+                    <Route exact path="/logout" component={BulletinBoard} />
                     <Route exact path="/profile" component={App} />
                 </Switch>
             </Auth>
