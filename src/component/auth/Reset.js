@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useForm } from "react-hook-form";
+import User from './User';
+import {serverUrl} from '../common';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,10 +17,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
-import { useHistory } from 'react-router-dom';
-import { useForm } from "react-hook-form";
-import User from './User';
 
 function Copyright() {
 	return (
@@ -61,7 +62,7 @@ export default function Reset() {
         var data = {
             email: argument.email,
         }
-        fetch('http://battle_record_api/api/password/reset', {
+        fetch(serverUrl + '/api/password/reset', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -116,44 +117,13 @@ export default function Reset() {
 							errors.email && <span>メールアドレスを入力してください。</span>
 						}
 					/>
-					<TextField
-						variant="outlined"
-						margin="normal"
-						required
-						fullWidth
-						name="password"
-						label="パスワード"
-						type="password"
-						id="password"
-						autoComplete="current-password"
-						error={errors.password || error !== '' ? true : false}
-						inputRef={register({ required: true })}
-						helperText={
-							errors.password && <span>パスワードを入力してください。</span>
-						}
-					/>
-                    <TextField
-						variant="outlined"
-						margin="normal"
-						required
-						fullWidth
-						name="confirm_password"
-						label="パスワード再確認"
-						type="password"
-						autoComplete="current-password"
-						error={errors.confirm_password || error !== '' ? true : false}
-						inputRef={register({ required: true })}
-						helperText={
-							errors.confirm_password && <span>パスワード再確認を入力してください。</span>
-						}
-					/>
 					<Button
 						type="submit"
 						fullWidth
 						variant="contained"
 						color="primary"
 						className={classes.submit}
-					>リセット
+					>リセットメールを送信
 					</Button>
 					<Grid container>
 						<Grid item>

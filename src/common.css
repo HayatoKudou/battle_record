@@ -210,4 +210,8 @@
     .bottom_form .tag_boxs {
         width: 100% !important;
     }
+
+    .tag_form label {
+        margin-bottom: 5px !important;
+    }
 }

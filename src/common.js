@@ -1,3 +1,5 @@
+export const serverUrl = 'http://kudohayatoblog.com';
+
 //日付フォーマット
 export function dateFormat(date, format) {
     format = format.replace(/YYYY/, date.getFullYear());

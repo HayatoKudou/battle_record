@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import User from '../auth/User';
-import { diffDate } from '../../common';
+import { diffDate, serverUrl } from '../../common';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -74,7 +74,7 @@ export default function MenuAppBar() {
         var data = {
             user_id: User.isLoggedIn() ? JSON.parse(User.getLocalStorage('user')).id  : localStorage.getItem("user") === null ? null : JSON.parse(User.getLocalStorage('user')).id,
         }
-        fetch('http://battle_record_api/api/clear_notice', {
+        fetch(serverUrl + '/api/clear_notice', {
             method: 'POST',
             headers: {'Content-Type': 'application/json',},
             body: JSON.stringify(data),

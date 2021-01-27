@@ -5,6 +5,7 @@ import {
   Switch,
 //   useLocation,
 } from 'react-router-dom';
+import { serverUrl } from '../common';
 
 import App from './App';
 import Login from './auth/Login';
@@ -23,9 +24,9 @@ function usePageViews() {
     }
 
     var data = {
-        user_id: JSON.parse(User.getLocalStorage('user')).id
+        user_id: User.isLoggedIn() ? JSON.parse(User.getLocalStorage('user')).id  : localStorage.getItem("user") === null ? null : JSON.parse(User.getLocalStorage('user')).id,
     }
-    fetch('http://battle_record_api/api/get_notice', {
+    fetch(serverUrl + '/api/get_notice', {
         method: 'POST',
         headers: {'Content-Type': 'application/json',},
         body: JSON.stringify(data),

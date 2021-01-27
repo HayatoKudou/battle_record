@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
+import {serverUrl} from '../common';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -70,7 +71,7 @@ export default function Register() {
             email: argument.email,
             password: argument.password,
         }
-        fetch('http://battle_record_api/api/register', {
+        fetch(serverUrl + '/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

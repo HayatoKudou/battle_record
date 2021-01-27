@@ -4,7 +4,7 @@ import {　useLocation　} from 'react-router-dom';
 
 import Header from './parts/header';
 import User from './auth/User';
-import {dateFormat, diffDate, zeroPadding} from '../common';
+import {serverUrl, dateFormat, diffDate, zeroPadding} from '../common';
 
 import { Checkbox } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,7 +29,9 @@ const useStyles = makeStyles((theme) => ({
     },
     all: {
         marginTop: 15,
-        padding: '15px 0 0 0 !important',
+        // padding: '15px 0 0 0 !important',
+        width: '100%',
+        height: '91%',
     },
     block: {
         display: 'block',
@@ -46,9 +48,9 @@ export default function BulletinBoard() {
 
     window.onload = function() {
         var data = {
-            user_id: JSON.parse(User.getLocalStorage('user')).id,
+            user_id: localStorage.getItem("user") !== null ? JSON.parse(User.getLocalStorage('user')).id : null,
         }
-        fetch('http://battle_record_api/api/apex_get_articles', {
+        fetch(serverUrl + '/api/apex_get_articles', {
             method: 'POST',
             headers: {'Content-Type': 'application/json',},
             body: JSON.stringify(data),
@@ -181,7 +183,7 @@ export default function BulletinBoard() {
                 tag: post_tag,
                 comment: argument.comment
             }
-            fetch('http://battle_record_api/api/apex_post', {
+            fetch(serverUrl + '/api/apex_post', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json',},
                 body: JSON.stringify(data),
@@ -220,7 +222,7 @@ export default function BulletinBoard() {
                 article_id: article_id,
                 user_id:  JSON.parse(User.getLocalStorage('user')).id,
             }
-            fetch('http://battle_record_api/api/apex_delete_article', {
+            fetch(serverUrl + '/api/apex_delete_article', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json',},
                 body: JSON.stringify(data),
@@ -515,7 +517,8 @@ export default function BulletinBoard() {
                                         </div>
 
                                         <div className="action_form">
-                                            {JSON.parse(User.getLocalStorage('user')).id === filtered_articles[key].user_id && (
+                                            {localStorage.getItem("user") !== null &&
+                                            (JSON.parse(User.getLocalStorage('user')).id === filtered_articles[key].user_id) && (
                                                 <div className="action_icon_form">
                                                     <TwitterIcon className="delete_icon" onClick={() => sendTwitter(filtered_articles[key].comment)} />
                                                     <DeleteForeverIcon className="delete_icon" onClick={() => deleteArticle(filtered_articles[key].id)} />

@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useForm } from "react-hook-form";
+import User from './User';
+import { serverUrl } from '../common';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,10 +17,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
-import { useHistory } from 'react-router-dom';
-import { useForm } from "react-hook-form";
-import User from './User';
 
 function Copyright() {
 	return (
@@ -62,7 +63,7 @@ export default function Login() {
             email: argument.email,
             password: argument.password,
         }
-        fetch('http://battle_record_api/api/login', {
+        fetch(serverUrl + '/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
