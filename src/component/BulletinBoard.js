@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import TwitterIcon from '@material-ui/icons/Twitter';
 
 const useStyles = makeStyles((theme) => ({
     selected_platform: {
@@ -241,6 +242,22 @@ export default function BulletinBoard() {
             }).catch(error => {
                 set_error(error);
             })
+        }
+    }
+
+    //twitter投稿
+    function sendTwitter(comment){
+        var url = document.location.href;
+        
+        if (comment != "") {
+            if (comment.length > 140) {
+                //文字数制限
+                alert("テキストが140字を超えています");
+            } else {
+                //投稿画面を開く
+                url = "http://twitter.com/share?url=" + escape(url) + "?text=" + comment;
+                window.open(url,"_blank","width=600,height=300");
+            }
         }
     }
 
@@ -500,11 +517,10 @@ export default function BulletinBoard() {
                                         <div className="action_form">
                                             {JSON.parse(User.getLocalStorage('user')).id === filtered_articles[key].user_id && (
                                                 <div className="action_icon_form">
-                                                    <i className="fab fa-twitter"></i>
+                                                    <TwitterIcon className="delete_icon" onClick={() => sendTwitter(filtered_articles[key].comment)} />
                                                     <DeleteForeverIcon className="delete_icon" onClick={() => deleteArticle(filtered_articles[key].id)} />
                                                 </div>
                                             )}
-                                            {/* <Button onClick={() => reply(filtered_articles[key].id, filtered_articles[key].user_name)} variant="contained">通報</Button> */}
                                             {filtered_articles[key].reply_count !== 0 &&
                                                 (<Button onClick={() => handleFilter('reply', filtered_articles[key].id)} variant="contained" color="secondary">{filtered_articles[key].reply_count + '件返信があります'}</Button>)
                                             }
