@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import User from './User';
-import {serverUrl} from '../common';
+import {serverUrl} from '../../common';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
