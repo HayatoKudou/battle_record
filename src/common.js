@@ -1,4 +1,4 @@
-export const serverUrl = 'http://kudohayatoblog.com';
+export const serverUrl = 'https://auth.gamer-lab.net';
 
 //日付フォーマット
 export function dateFormat(date, format) {

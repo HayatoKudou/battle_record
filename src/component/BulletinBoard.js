@@ -500,36 +500,43 @@ export default function BulletinBoard() {
                                     </div>
                                     <p className="comment">{filtered_articles[key].comment}</p>
 
-                                    <div className="bottom_form">
-                                        <div className="tag_boxs">
-                                            {filtered_articles[key].tag_vc_yes ? (<div className="tag_box"><p>#VC有り</p></div>) : ''}
-                                            {filtered_articles[key].tag_vc_no ? (<div className="tag_box"><p>#VC無し</p></div>) : ''}
-                                            {filtered_articles[key].tag_cooperation ? (<div className="tag_box"><p>#VC協力プレイ</p></div>) : ''}
-                                            {filtered_articles[key].tag_friend ? (<div className="tag_box"><p>#フレンド募集</p></div>) : ''}
-                                            {filtered_articles[key].tag_clan ? (<div className="tag_box"><p>#クラメン募集</p></div>) : ''}
-                                            {filtered_articles[key].tag_rank ? (<div className="tag_box"><p>#ランクマッチ</p></div>) : ''}
-                                            {filtered_articles[key].tag_quick ? (<div className="tag_box"><p>#クイックマッチ</p></div>) : ''}
-                                            {filtered_articles[key].tag_event ? (<div className="tag_box"><p>#イベントマッチ</p></div>) : ''}
-                                            {filtered_articles[key].tag_enjoy ? (<div className="tag_box"><p>#エンジョイ勢</p></div>) : ''}
-                                            {filtered_articles[key].tag_seriously ? (<div className="tag_box"><p>#ガチ勢</p></div>) : ''}
-                                            {filtered_articles[key].tag_society ? (<div className="tag_box"><p>#社会人</p></div>) : ''}
-                                            {filtered_articles[key].tag_student ? (<div className="tag_box"><p>#学生</p></div>) : ''}
+                                    {(filtered_articles[key].tag_vc_yes || filtered_articles[key].tag_vc_no || filtered_articles[key].tag_cooperation || 
+                                    filtered_articles[key].tag_friend || filtered_articles[key].tag_clan || filtered_articles[key].tag_rank || filtered_articles[key].tag_quick ||
+                                    filtered_articles[key].tag_event || filtered_articles[key].tag_enjoy || filtered_articles[key].tag_seriously || filtered_articles[key].tag_society ||
+                                    filtered_articles[key].tag_student) ? (
+                                        <div className="bottom_form">
+                                            <div className="tag_boxs">
+                                                {filtered_articles[key].tag_vc_yes ? (<div className="tag_box"><p>#VC有り</p></div>) : ''}
+                                                {filtered_articles[key].tag_vc_no ? (<div className="tag_box"><p>#VC無し</p></div>) : ''}
+                                                {filtered_articles[key].tag_cooperation ? (<div className="tag_box"><p>#VC協力プレイ</p></div>) : ''}
+                                                {filtered_articles[key].tag_friend ? (<div className="tag_box"><p>#フレンド募集</p></div>) : ''}
+                                                {filtered_articles[key].tag_clan ? (<div className="tag_box"><p>#クラメン募集</p></div>) : ''}
+                                                {filtered_articles[key].tag_rank ? (<div className="tag_box"><p>#ランクマッチ</p></div>) : ''}
+                                                {filtered_articles[key].tag_quick ? (<div className="tag_box"><p>#クイックマッチ</p></div>) : ''}
+                                                {filtered_articles[key].tag_event ? (<div className="tag_box"><p>#イベントマッチ</p></div>) : ''}
+                                                {filtered_articles[key].tag_enjoy ? (<div className="tag_box"><p>#エンジョイ勢</p></div>) : ''}
+                                                {filtered_articles[key].tag_seriously ? (<div className="tag_box"><p>#ガチ勢</p></div>) : ''}
+                                                {filtered_articles[key].tag_society ? (<div className="tag_box"><p>#社会人</p></div>) : ''}
+                                                {filtered_articles[key].tag_student ? (<div className="tag_box"><p>#学生</p></div>) : ''}
+                                            </div>
                                         </div>
+                                        
+                                    ) : ''}
 
-                                        <div className="action_form">
-                                            {localStorage.getItem("user") !== null &&
-                                            (JSON.parse(User.getLocalStorage('user')).id === filtered_articles[key].user_id) && (
-                                                <div className="action_icon_form">
-                                                    <TwitterIcon className="delete_icon" onClick={() => sendTwitter(filtered_articles[key].comment)} />
-                                                    <DeleteForeverIcon className="delete_icon" onClick={() => deleteArticle(filtered_articles[key].id)} />
-                                                </div>
-                                            )}
-                                            {filtered_articles[key].reply_count !== 0 &&
-                                                (<Button onClick={() => handleFilter('reply', filtered_articles[key].id)} variant="contained" color="secondary">{filtered_articles[key].reply_count + '件返信があります'}</Button>)
-                                            }
-                                            <Button onClick={() => reply(filtered_articles[key].id, filtered_articles[key].user_name)} variant="contained" color="primary">返信</Button>
-                                        </div>
+                                    <div className="action_form">
+                                        {localStorage.getItem("user") !== null &&
+                                        (JSON.parse(User.getLocalStorage('user')).id === filtered_articles[key].user_id) && (
+                                            <div className="action_icon_form">
+                                                <TwitterIcon className="delete_icon" onClick={() => sendTwitter(filtered_articles[key].comment)} />
+                                                <DeleteForeverIcon className="delete_icon" onClick={() => deleteArticle(filtered_articles[key].id)} />
+                                            </div>
+                                        )}
+                                        {filtered_articles[key].reply_count !== 0 &&
+                                            (<Button onClick={() => handleFilter('reply', filtered_articles[key].id)} variant="contained" color="secondary">{filtered_articles[key].reply_count + '件返信があります'}</Button>)
+                                        }
+                                        <Button onClick={() => reply(filtered_articles[key].id, filtered_articles[key].user_name)} variant="contained" color="primary">返信</Button>
                                     </div>
+
                                 </div>
                             )
                         })}

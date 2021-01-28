@@ -75,18 +75,18 @@
     display: inline-block;
 }
 
-.bottom_form .action_form {
+/* .bottom_form .action_form {
     position: absolute;
     bottom: 0;
     right: 0;
-}
+} */
 
 .article_flame .action_form {
     text-align: right;
     margin-top: 5px;
     align-items: center;
     display: flex;
-    float: right;
+    justify-content: flex-end;
 }
 
 .article_flame .action_form button {
@@ -213,5 +213,12 @@
 
     .tag_form label {
         margin-bottom: 5px !important;
+    }
+
+    .article_flame .action_form {
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+        float: unset;
     }
 }
