@@ -1,4 +1,5 @@
 export const serverUrl = 'https://auth.gamer-lab.net';
+export const copyright = 'gamer-lab.net';
 
 //日付フォーマット
 export function dateFormat(date, format) {
@@ -28,4 +29,8 @@ export function diffDate(t1){
 //0埋め
 export function zeroPadding(num,length){
     return ('0000000000' + num).slice(-length);
+}
+
+export function reloadPage(){
+    window.location.reload();
 }

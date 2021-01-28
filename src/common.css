@@ -122,7 +122,7 @@
 .tag_form label {
     display: inline-block;
     cursor: pointer;
-    margin: 3px;
+    margin: 4px;
 }
 .tag_form label input {
     display: none; /* デフォルトのinputは非表示にする */

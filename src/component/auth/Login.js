@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import User from './User';
-import { serverUrl } from '../../common';
+import { serverUrl, copyright } from '../../common';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -23,7 +23,7 @@ function Copyright() {
 		<Typography variant="body2" color="textSecondary" align="center">
 			{'Copyright © '}
 			<Link color="inherit" href="https://material-ui.com/">
-				Your Website
+                {copyright}
             </Link>{' '}
 			{new Date().getFullYear()}
 			{'.'}

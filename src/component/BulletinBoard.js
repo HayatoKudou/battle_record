@@ -4,7 +4,7 @@ import {　useLocation　} from 'react-router-dom';
 
 import Header from './parts/header';
 import User from './auth/User';
-import {serverUrl, dateFormat, diffDate, zeroPadding} from '../common';
+import { serverUrl, dateFormat, diffDate, zeroPadding, reloadPage } from '../common';
 
 import { Checkbox } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,6 +14,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import CreateIcon from '@material-ui/icons/Create';
+import CachedIcon from '@material-ui/icons/Cached';
 
 const useStyles = makeStyles((theme) => ({
     selected_platform: {
@@ -250,6 +252,7 @@ export default function BulletinBoard() {
     //twitter投稿
     function sendTwitter(comment){
         var url = document.location.href;
+        var hash = 'ApexLegends';
         
         if (comment != "") {
             if (comment.length > 140) {
@@ -257,7 +260,7 @@ export default function BulletinBoard() {
                 alert("テキストが140字を超えています");
             } else {
                 //投稿画面を開く
-                url = "http://twitter.com/share?url=" + escape(url) + "?text=" + comment;
+                url = "https://twitter.com/intent/tweet?text=" + comment + "&url=" + url + "&hashtags="+hash;
                 window.open(url,"_blank","width=600,height=300");
             }
         }
@@ -478,8 +481,11 @@ export default function BulletinBoard() {
                                 }
                                 label={'コメント'}
                             />
-                            <Button onClick={handleSubmit(post)} className="post" variant="contained" color="primary">投稿する</Button>
-                            <div className="clear_condition">
+                            <Button onClick={handleSubmit(post)} className="post" variant="contained" color="primary">
+                                投稿する<CreateIcon fontSize="small" />
+                            </Button>
+                            <div className="sort_form">
+                                <Button className="update_button" variant="contained" onClick={() => reloadPage('')} >更新<CachedIcon fontSize="small" /></Button>
                                 <Button className="clear_condition_button" variant="contained" onClick={() => setFilterQuery('')} >絞り込みを解除</Button>
                             </div>                            
                         </form>

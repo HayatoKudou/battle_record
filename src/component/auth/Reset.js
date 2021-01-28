@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import User from './User';
-import {serverUrl} from '../../common';
+import { serverUrl, copyright } from '../../common';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -17,13 +17,14 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Alert from '@material-ui/lab/Alert';
 
 function Copyright() {
 	return (
 		<Typography variant="body2" color="textSecondary" align="center">
 			{'Copyright © '}
 			<Link color="inherit" href="https://material-ui.com/">
-				Your Website
+                {copyright}
             </Link>{' '}
 			{new Date().getFullYear()}
 			{'.'}
@@ -32,6 +33,9 @@ function Copyright() {
 }
 
 const useStyles = makeStyles((theme) => ({
+    aleart: {
+        width: '100%',
+    },
 	paper: {
 		marginTop: theme.spacing(8),
 		display: 'flex',
@@ -57,6 +61,8 @@ export default function Reset() {
 	const classes = useStyles();
     const { register, handleSubmit, errors } = useForm();
     const [error, set_error] = useState('');
+    const [success_aleart, set_success_aleart] = useState('');
+    const [error_aleart, set_error_aleart] = useState('');
 
     function passwordReset(argument) {
         var data = {
@@ -71,16 +77,15 @@ export default function Reset() {
         })
         .then(response => {
             if (!response.ok) {
-                set_error('ユーザーが見つかりません');
+                set_error_aleart(response)
             } else {
                 return response.json().then(userInfo => {
                     if('errors' in userInfo){
                         set_error(userInfo.errors);
                     } else {
+                        set_success_aleart('リセットメールを送信しました。');
                         User.set('api_token', userInfo.token);
                         User.setArr('user', userInfo.user);
-                        // User.login();
-                        // history.push('/');
                     }
                 });
             }
@@ -96,6 +101,18 @@ export default function Reset() {
 				<Avatar className={classes.avatar}>
 					<LockOutlinedIcon />
 				</Avatar>
+
+                {success_aleart !== '' && (
+    				<Typography component="h1" variant="h5" className={classes.aleart}>
+                        <Alert severity="success">{success_aleart}</Alert>                
+                    </Typography>
+                )}
+                {error_aleart !== '' && (
+                <Typography component="h1" variant="h5" className={classes.aleart}>
+                    <Alert severity="error">{error_aleart}</Alert>                
+                </Typography>
+                )}
+
 				<Typography component="h1" variant="h5">パスワードリセット</Typography>
                 {error !== '' && (
                     <Typography color="error">{error}</Typography>

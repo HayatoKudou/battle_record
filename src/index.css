@@ -173,16 +173,21 @@ code {
     color: black;
 }
 
-.clear_condition {
+.sort_form {
     margin-left: 30px;
     text-align: right;
 }
 
-.clear_condition_button {
+.sort_form button {
     color: black !important;
     padding: 7px;
     font-size: 13px !important;
     font-weight: bold !important;
+}
+
+.sort_form .update_button {
+    height: 35px;
+    margin-right: 10px;
 }
 
 
@@ -261,6 +266,10 @@ code {
 }
 .clear_condition {
     margin-left: 0px !important;
+}
+
+.sort_form {
+    width: auto !important;
 }
 
 }
