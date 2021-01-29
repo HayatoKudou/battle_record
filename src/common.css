@@ -28,7 +28,7 @@
 .article_flame {
     padding: 1em;
     margin: 0.5em auto;
-    width:100%;
+    width:95%;
     color: #696969;
     background: #ffffe0;
     border-left: solid 15px #ff8c00;
@@ -59,6 +59,7 @@
     font-weight: bold;
     margin-top: 5px !important;
     font-size: 14px !important;
+    word-wrap: break-word !important;
 }
 
 .article_flame p {

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import User from './User';
 import { serverUrl, copyright } from '../../common';
+import Header from '../parts/header';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -90,78 +91,81 @@ export default function Login() {
     }
 
 	return (
-		<Container component="main" maxWidth="xs">
-			<CssBaseline />
-			<div className={classes.paper}>
-				<Avatar className={classes.avatar}>
-					<LockOutlinedIcon />
-				</Avatar>
-				<Typography component="h1" variant="h5">ログイン</Typography>
-                {error !== '' && (
-                    <Typography color="error">{error}</Typography>
-                )}
-				<form onSubmit={handleSubmit(setLogin)} className="player_name_form">
-					<TextField
-						variant="outlined"
-						margin="normal"
-						required
-						fullWidth
-						id="email"
-						label="メールアドレス"
-						name="email"
-						autoComplete="email"
-						autoFocus
-						error={errors.email || error !== '' ? true : false}
-						inputRef={register({ required: true })}
-						helperText={
-							errors.email && <span>メールアドレスを入力してください。</span>
-						}
-					/>
-					<TextField
-						variant="outlined"
-						margin="normal"
-						required
-						fullWidth
-						name="password"
-						label="パスワード"
-						type="password"
-						id="password"
-						autoComplete="current-password"
-						error={errors.password || error !== '' ? true : false}
-						inputRef={register({ required: true })}
-						helperText={
-							errors.password && <span>メールアドレスを入力してください。</span>
-						}
-					/>
-					<FormControlLabel
-						control={<Checkbox value="remember" color="primary" />}
-						label="パスワードを保存する"
-					/>
-					<Button
-						type="submit"
-						fullWidth
-						variant="contained"
-						color="primary"
-						className={classes.submit}
-					>ログイン
-					</Button>
-					<Grid container>
-						<Grid item xs>
-							<Link href="/reset" variant="body2">
-								パスワードを忘れた場合
-							</Link>
-						</Grid>
-						<Grid item>
-							<Link href="/register" variant="body2">
-								アカウントを作成する
-							</Link>
-						</Grid>
-					</Grid>
-				</form>
-			</div>
-			<Box mt={8}>
-				<Copyright />
-			</Box>
-		</Container>
+        <div>
+            <Header />
+    		<Container component="main" maxWidth="xs">
+    			<CssBaseline />
+    			<div className={classes.paper}>
+    				<Avatar className={classes.avatar}>
+    					<LockOutlinedIcon />
+    				</Avatar>
+    				<Typography component="h1" variant="h5">ログイン</Typography>
+                    {error !== '' && (
+                        <Typography color="error">{error}</Typography>
+                    )}
+    				<form onSubmit={handleSubmit(setLogin)} className="player_name_form">
+    					<TextField
+    						variant="outlined"
+    						margin="normal"
+    						required
+    						fullWidth
+    						id="email"
+    						label="メールアドレス"
+    						name="email"
+    						autoComplete="email"
+    						autoFocus
+    						error={errors.email || error !== '' ? true : false}
+    						inputRef={register({ required: true })}
+    						helperText={
+    							errors.email && <span>メールアドレスを入力してください。</span>
+    						}
+    					/>
+    					<TextField
+    						variant="outlined"
+    						margin="normal"
+    						required
+    						fullWidth
+    						name="password"
+    						label="パスワード"
+    						type="password"
+    						id="password"
+    						autoComplete="current-password"
+    						error={errors.password || error !== '' ? true : false}
+    						inputRef={register({ required: true })}
+    						helperText={
+    							errors.password && <span>メールアドレスを入力してください。</span>
+    						}
+    					/>
+    					<FormControlLabel
+    						control={<Checkbox value="remember" color="primary" />}
+    						label="パスワードを保存する"
+    					/>
+    					<Button
+    						type="submit"
+    						fullWidth
+    						variant="contained"
+    						color="primary"
+    						className={classes.submit}
+    					>ログイン
+    					</Button>
+    					<Grid container>
+    						<Grid item xs>
+    							<Link href="/reset" variant="body2">
+    								パスワードを忘れた場合
+    							</Link>
+    						</Grid>
+    						<Grid item>
+    							<Link href="/register" variant="body2">
+    								アカウントを作成する
+    							</Link>
+    						</Grid>
+    					</Grid>
+    				</form>
+    			</div>
+    			<Box mt={8}>
+    				<Copyright />
+    			</Box>
+    		</Container>
+        </div>
 	);
 }

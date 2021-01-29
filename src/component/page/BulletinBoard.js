@@ -2,9 +2,9 @@ import React, { useState, useMemo } from 'react';
 import { useForm } from "react-hook-form";
 import {　useLocation　} from 'react-router-dom';
 
-import Header from './parts/header';
-import User from './auth/User';
-import { serverUrl, dateFormat, diffDate, zeroPadding, reloadPage } from '../common';
+import Header from '../parts/header';
+import User from '../auth/User';
+import { serverUrl, dateFormat, diffDate, zeroPadding, reloadPage } from '../../common';
 
 import { Checkbox } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,6 +16,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import CreateIcon from '@material-ui/icons/Create';
 import CachedIcon from '@material-ui/icons/Cached';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     selected_platform: {
@@ -65,6 +66,7 @@ export default function BulletinBoard() {
                     if('errors' in data){
                         set_error(data.errors);
                     } else {
+                        set_error('');
                         set_articles(data.articles);
                         set_filtered_articles(data.articles);
                     }
@@ -253,7 +255,7 @@ export default function BulletinBoard() {
     function sendTwitter(comment){
         var url = document.location.href;
         var hash = 'ApexLegends';
-        
+
         if (comment != "") {
             if (comment.length > 140) {
                 //文字数制限
@@ -423,9 +425,9 @@ export default function BulletinBoard() {
                     <div  className="select_platform_center_form">
                         <form onSubmit={handleSubmit(post)} className="player_name_form">
                             {error !== '' && (
-                                <Typography color="error">
+                                <Typography  color="error" component="h1" variant="h5" className="alert_message">
                                     {Object.keys(error).map(key => (
-                                        <li key={key} className={classes.error_message}>{error[key]}</li>
+                                        <Alert key={key} severity="error">{error[key]}</Alert>
                                     ))}
                                 </Typography>
                             )}
@@ -487,7 +489,7 @@ export default function BulletinBoard() {
                             <div className="sort_form">
                                 <Button className="update_button" variant="contained" onClick={() => reloadPage('')} >更新<CachedIcon fontSize="small" /></Button>
                                 <Button className="clear_condition_button" variant="contained" onClick={() => setFilterQuery('')} >絞り込みを解除</Button>
-                            </div>                            
+                            </div>
                         </form>
 
                         {Object.keys(filtered_articles).map(key => {
@@ -506,7 +508,7 @@ export default function BulletinBoard() {
                                     </div>
                                     <p className="comment">{filtered_articles[key].comment}</p>
 
-                                    {(filtered_articles[key].tag_vc_yes || filtered_articles[key].tag_vc_no || filtered_articles[key].tag_cooperation || 
+                                    {(filtered_articles[key].tag_vc_yes || filtered_articles[key].tag_vc_no || filtered_articles[key].tag_cooperation ||
                                     filtered_articles[key].tag_friend || filtered_articles[key].tag_clan || filtered_articles[key].tag_rank || filtered_articles[key].tag_quick ||
                                     filtered_articles[key].tag_event || filtered_articles[key].tag_enjoy || filtered_articles[key].tag_seriously || filtered_articles[key].tag_society ||
                                     filtered_articles[key].tag_student) ? (
@@ -526,7 +528,7 @@ export default function BulletinBoard() {
                                                 {filtered_articles[key].tag_student ? (<div className="tag_box"><p>#学生</p></div>) : ''}
                                             </div>
                                         </div>
-                                        
+
                                     ) : ''}
 
                                     <div className="action_form">

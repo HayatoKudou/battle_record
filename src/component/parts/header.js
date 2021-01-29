@@ -18,6 +18,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Drawer from '@material-ui/core/Drawer';
 import Badge from '@material-ui/core/Badge';
+import { FixedSizeList } from 'react-window';
 
 import MailIcon from '@material-ui/icons/Mail';
 import Paper from '@material-ui/core/Paper';
@@ -41,6 +42,14 @@ const useStyles = makeStyles((theme) => ({
     },
     list: {
         width: 250,
+        backgroundColor: theme.palette.background.paper,
+    },
+    list_checked: {
+        color: '#1976d2',
+        padding: '5px 0 0 0 !important',
+    },
+    list_nochecked: {
+        padding: '0 0 0 30px !important',
     },
     menuButton: {
         marginLeft: -12,
@@ -53,6 +62,10 @@ const useStyles = makeStyles((theme) => ({
         padding: '7px',
     }
 }));
+
+function ListItemLink(props) {
+    return <ListItem button component="a" {...props} />;
+  }
 
 export default function MenuAppBar() {
 
@@ -98,37 +111,32 @@ export default function MenuAppBar() {
 
     const sideList = (
         <div className={classes.list}>
-          <List>
-            <Link to="/">
-              <ListItem button>
-                <ListItemText primary="Apex Legends エーペックスレジェンズ掲示板" />
-              </ListItem>
-            </Link>
-            {User.isLoggedIn() ?
-            <div>
-            <Link to="/logout">
-                <ListItem button>
-                    <ListItemText primary="ログアウト" />
-                </ListItem>
-            </Link>
-            </div>
-            :
-            <div>
-            <Link to="/register">
-                <ListItem button>
-                    <ListItemText primary="ユーザー登録" />
-                </ListItem>
-            </Link>
-            <Link to="/login">
-                <ListItem button>
-                    <ListItemText primary="ログイン" />
-                </ListItem>
-            </Link>
-            </div>
-            }
-          </List>
+            <List>
+                <ListItemLink href="/">
+                    <ListItemText className={classes.list_checked} primary="Apex Legends エーペックスレジェンズ掲示板" />
+                </ListItemLink>
+                {User.isLoggedIn() ?
+                <div>
+                    <ListItemLink onClick={() => {User.logout();window.location.reload();}} className={classes.list_nochecked}>
+                        <ListItemText primary="ログアウト" />
+                    </ListItemLink>
+                </div>
+                :
+                <div>
+                    <ListItemLink href="/register" className={classes.list_nochecked}>
+                        <ListItemText primary="ユーザー登録" />
+                    </ListItemLink>
+                    <ListItemLink href="/login" className={classes.list_nochecked}>
+                        <ListItemText primary="ログイン" />
+                    </ListItemLink>
+                </div>
+                }
+                <ListItemLink href="/contact" className={classes.list_nochecked}>
+                    <ListItemText primary="お問い合わせ" />
+                </ListItemLink>
+            </List>
         </div>
-     );
+    );
 
     return (
         <div className={classes.root}>

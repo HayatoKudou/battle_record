@@ -11,12 +11,24 @@ import App from './App';
 import Login from './auth/Login';
 import Register from './auth/Register';
 import Reset from './auth/Reset';
-import BulletinBoard from './BulletinBoard';
+import BulletinBoard from './page/BulletinBoard';
 import Auth from './auth/Auth';
 import User from './auth/User';
+import {webpush} from '../webpush';
+import Contact from './page/contact';
 
 function usePageViews() {
-    // let location = useLocation();
+
+    // const title    = '見出し';
+    // const options  = {
+    //     body : '本文',
+    //     data : {
+    //       foo : '任意のデータ'
+    //      }
+    // };
+    // webpush(title, options);
+
+    //デバイスの登録
     if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
         User.set('device', 'smartphone');
     } else {
@@ -58,10 +70,10 @@ function RouterApp() {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/reset" component={Reset} />
                 <Route exact path="/register" component={Register} />
+                <Route exact path="/contact" component={Contact} />
             <Auth>
                 {/* ログイン必須ページ */}
                 <Switch>
-                    <Route exact path="/logout" component={BulletinBoard} />
                     <Route exact path="/profile" component={App} />
                 </Switch>
             </Auth>

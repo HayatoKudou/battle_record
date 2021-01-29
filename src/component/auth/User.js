@@ -15,22 +15,14 @@ class User {
     };
   
     // login = async (email, password) => {
-    login = async () => {
-      // ログイン処理
-      // ログインエラー時には、falseを返してもいいし、returnを別の用途で利用したかったら
-      // 例外を出しして呼び出し元でcatchしてもいいかと思います。
-  
+    login = async () => {  
       this.set('isLoggedIn', true);
-  
       return true;
     };
   
     logout = async () => {
       if (this.isLoggedIn()) {
-        this.set('isLoggedIn', false);
-  
-        // ログアウト処理
-        //　他に必要な処理があるのならこちら
+        this.set('isLoggedIn', false);        
       }
     };
   }

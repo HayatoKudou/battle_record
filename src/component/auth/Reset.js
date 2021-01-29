@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import User from './User';
 import { serverUrl, copyright } from '../../common';
+import Header from '../parts/header';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -77,12 +78,15 @@ export default function Reset() {
         })
         .then(response => {
             if (!response.ok) {
-                set_error_aleart(response)
+                set_error_aleart(response);
             } else {
                 return response.json().then(userInfo => {
+                    console.log(userInfo);
                     if('errors' in userInfo){
-                        set_error(userInfo.errors);
+                        set_success_aleart('');
+                        set_error_aleart(userInfo.errors);
                     } else {
+                        set_error_aleart('');
                         set_success_aleart('リセットメールを送信しました。');
                         User.set('api_token', userInfo.token);
                         User.setArr('user', userInfo.user);
@@ -95,65 +99,69 @@ export default function Reset() {
     }
 
 	return (
-		<Container component="main" maxWidth="xs">
-			<CssBaseline />
-			<div className={classes.paper}>
-				<Avatar className={classes.avatar}>
-					<LockOutlinedIcon />
-				</Avatar>
+        <div>
+            <Header />
+    		<Container component="main" maxWidth="xs">
+    			<CssBaseline />
+    			<div className={classes.paper}>
+    				<Avatar className={classes.avatar}>
+    					<LockOutlinedIcon />
+    				</Avatar>
 
-                {success_aleart !== '' && (
-    				<Typography component="h1" variant="h5" className={classes.aleart}>
-                        <Alert severity="success">{success_aleart}</Alert>                
+    				<Typography component="h1" variant="h5">パスワードリセット</Typography>
+
+                    {success_aleart !== '' && (
+        				<Typography component="h1" variant="h5" className={classes.aleart}>
+                            <Alert severity="success">{success_aleart}</Alert>
+                        </Typography>
+                    )}
+
+                    {error_aleart !== '' && (
+                    <Typography component="h1" variant="h5" className={classes.aleart}>
+                        {Object.keys(error_aleart).map(key => (
+                            <Alert key={key} severity="error">{error_aleart[key]}</Alert>
+                        ))}
                     </Typography>
-                )}
-                {error_aleart !== '' && (
-                <Typography component="h1" variant="h5" className={classes.aleart}>
-                    <Alert severity="error">{error_aleart}</Alert>                
-                </Typography>
-                )}
+                    )}
 
-				<Typography component="h1" variant="h5">パスワードリセット</Typography>
-                {error !== '' && (
-                    <Typography color="error">{error}</Typography>
-                )}
-				<form onSubmit={handleSubmit(passwordReset)} className="player_name_form">
-					<TextField
-						variant="outlined"
-						margin="normal"
-						required
-						fullWidth
-						id="email"
-						label="メールアドレス"
-						name="email"
-						autoComplete="email"
-						autoFocus
-						error={errors.email || error !== '' ? true : false}
-						inputRef={register({ required: true })}
-						helperText={
-							errors.email && <span>メールアドレスを入力してください。</span>
-						}
-					/>
-					<Button
-						type="submit"
-						fullWidth
-						variant="contained"
-						color="primary"
-						className={classes.submit}
-					>リセットメールを送信
-					</Button>
-					<Grid container>
-						<Grid item>
-							<Link href="/register" variant="body2">
-								アカウントを作成する
-							</Link>
-						</Grid>
-					</Grid>
-				</form>
-			</div>
-			<Box mt={8}>
-				<Copyright />
-			</Box>
-		</Container>
+    				<form onSubmit={handleSubmit(passwordReset)} className="player_name_form">
+    					<TextField
+    						variant="outlined"
+    						margin="normal"
+    						required
+    						fullWidth
+    						id="email"
+    						label="メールアドレス"
+    						name="email"
+    						autoComplete="email"
+    						autoFocus
+    						error={errors.email || error !== '' ? true : false}
+    						inputRef={register({ required: true })}
+    						helperText={
+    							errors.email && <span>メールアドレスを入力してください。</span>
+    						}
+    					/>
+    					<Button
+    						type="submit"
+    						fullWidth
+    						variant="contained"
+    						color="primary"
+    						className={classes.submit}
+    					>リセットメールを送信
+    					</Button>
+    					<Grid container>
+    						<Grid item>
+    							<Link href="/register" variant="body2">
+    								アカウントを作成する
+    							</Link>
+    						</Grid>
+    					</Grid>
+    				</form>
+    			</div>
+    			<Box mt={8}>
+    				<Copyright />
+    			</Box>
+    		</Container>
+        </div>
 	);
 }

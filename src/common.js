@@ -1,3 +1,4 @@
+export const frontUrl = 'https://gamer-lab.net';
 export const serverUrl = 'https://auth.gamer-lab.net';
 export const copyright = 'gamer-lab.net';
 

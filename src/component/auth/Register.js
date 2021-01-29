@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
 import { serverUrl, copyright } from '../../common';
+import Header from '../parts/header';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -98,126 +99,129 @@ export default function Register() {
     }
 
     return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">アカウント作成</Typography>
-                {error !== '' && (
-                    <Typography color="error">
-                        {Object.keys(error).map(key => (
-                            <li key={key}>{error[key]}</li>
-                        ))}
-                    </Typography>
-                )}
-                <form onSubmit={handleSubmit(sendRegister)} className={classes.form}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                        <div className="select_platform_register">
-                            <ul>
-                                <li className={selected_platform === 'origin' ? classes.selected_platform : ''}
-                                    onClick={() => {set_selected_platform('origin')}}>
-                                    <IconButton><i className="fab fa-steam"></i></IconButton>
-                                </li>
-                                <li className={selected_platform === 'xbl' ? classes.selected_platform : ''}
-                                    onClick={() => {set_selected_platform('xbl')}}>
-                                    <IconButton><i className="fab fa-xbox"></i></IconButton>
-                                </li>
-                                <li className={selected_platform === 'psn' ? classes.selected_platform : ''}
-                                    onClick={() => {set_selected_platform('psn')}}>
-                                    <IconButton><i className="fab fa-playstation"></i></IconButton>
-                                </li>
-                                <li className={selected_platform === 'all' ? classes.selected_platform : ''}
-                                    onClick={() => {set_selected_platform('all')}}>
-                                    <IconButton><p>ALL</p></IconButton>
-                                </li>
-                            </ul>
-                        </div>
+        <div>
+            <Header />
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">アカウント作成</Typography>
+                    {error !== '' && (
+                        <Typography color="error">
+                            {Object.keys(error).map(key => (
+                                <li key={key}>{error[key]}</li>
+                            ))}
+                        </Typography>
+                    )}
+                    <form onSubmit={handleSubmit(sendRegister)} className={classes.form}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                            <div className="select_platform_register">
+                                <ul>
+                                    <li className={selected_platform === 'origin' ? classes.selected_platform : ''}
+                                        onClick={() => {set_selected_platform('origin')}}>
+                                        <IconButton><i className="fab fa-steam"></i></IconButton>
+                                    </li>
+                                    <li className={selected_platform === 'xbl' ? classes.selected_platform : ''}
+                                        onClick={() => {set_selected_platform('xbl')}}>
+                                        <IconButton><i className="fab fa-xbox"></i></IconButton>
+                                    </li>
+                                    <li className={selected_platform === 'psn' ? classes.selected_platform : ''}
+                                        onClick={() => {set_selected_platform('psn')}}>
+                                        <IconButton><i className="fab fa-playstation"></i></IconButton>
+                                    </li>
+                                    <li className={selected_platform === 'all' ? classes.selected_platform : ''}
+                                        onClick={() => {set_selected_platform('all')}}>
+                                        <IconButton><p>ALL</p></IconButton>
+                                    </li>
+                                </ul>
+                            </div>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    autoComplete="fname"
+                                    name="player_id"
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="PSN ID"
+                                    label={
+                                        selected_platform === 'origin' ? 'origin ID' :
+                                        selected_platform === 'xbl' ? 'xbox ID' :
+                                        selected_platform === 'psn' ? 'PSN ID' : 'ニックネーム'
+                                    }
+                                    autoFocus
+                                    error={errors.player || error !== '' ? true : false}
+                                    inputRef={register({ required: true })}
+                                    helperText={
+                                        errors.email && (
+                                            <span>
+                                                {selected_platform === 'origin' ? 'origin ID' :
+                                                selected_platform === 'xbl' ? 'xbox ID' :
+                                                selected_platform === 'psn' ? 'PSN ID' : 'ニックネーム'}
+                                            </span>
+                                        )
+                                    }
+                                   />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="メールアドレス"
+                                    name="email"
+                                    autoComplete="email"
+                                    error={errors.email || error !== '' ? true : false}
+                                    inputRef={register({ required: true })}
+                                    helperText={
+                                        errors.email && <span>メールアドレスを入力してください。</span>
+                                    }
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="パスワード"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                    error={errors.password || error !== '' ? true : false}
+                                    inputRef={register({ required: true })}
+                                    helperText={
+                                        errors.password && <span>メールアドレスを入力してください。</span>
+                                    }
+                                />
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                autoComplete="fname"
-                                name="player_id"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="PSN ID"
-                                label={
-                                    selected_platform === 'origin' ? 'origin ID' :
-                                    selected_platform === 'xbl' ? 'xbox ID' :
-                                    selected_platform === 'psn' ? 'PSN ID' : 'ニックネーム'
-                                }
-                                autoFocus
-                                error={errors.player || error !== '' ? true : false}
-                                inputRef={register({ required: true })}
-                                helperText={
-                                    errors.email && (
-                                        <span>
-                                            {selected_platform === 'origin' ? 'origin ID' :
-                                            selected_platform === 'xbl' ? 'xbox ID' :
-                                            selected_platform === 'psn' ? 'PSN ID' : 'ニックネーム'}
-                                        </span>
-                                    )
-                                }
-                               />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            アカウントを作成
+                        </Button>
+                        <Grid container justify="flex-end">
+                            <Grid item>
+                                <Link href="/login" variant="body2">
+                                    アカウントをお持ちの場合
+                                </Link>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="email"
-                                label="メールアドレス"
-                                name="email"
-                                autoComplete="email"
-                                error={errors.email || error !== '' ? true : false}
-                                inputRef={register({ required: true })}
-                                helperText={
-                                    errors.email && <span>メールアドレスを入力してください。</span>
-                                }
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password"
-                                label="パスワード"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                                error={errors.password || error !== '' ? true : false}
-                                inputRef={register({ required: true })}
-                                helperText={
-                                    errors.password && <span>メールアドレスを入力してください。</span>
-                                }
-                            />
-                        </Grid>
-                    </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        アカウントを作成
-                    </Button>
-                    <Grid container justify="flex-end">
-                        <Grid item>
-                            <Link href="/login" variant="body2">
-                                アカウントをお持ちの場合
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </form>
-            </div>
-            <Box mt={5}>
-                <Copyright />
-            </Box>
-        </Container>
+                    </form>
+                </div>
+                <Box mt={5}>
+                    <Copyright />
+                </Box>
+            </Container>
+        </div>
     );
 }
