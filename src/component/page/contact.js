@@ -71,7 +71,7 @@ export default function Contact(){
 
     return(
         <div>
-            <Header />
+            {/* <Header /> */}
             <form onSubmit={handleSubmit(post)} className={classes.form}>
 
                 {success_aleart !== '' && (

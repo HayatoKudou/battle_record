@@ -12,6 +12,7 @@ import Login from './auth/Login';
 import Register from './auth/Register';
 import Reset from './auth/Reset';
 import BulletinBoard from './page/BulletinBoard';
+import MenuAppBar from './parts/header';
 import Auth from './auth/Auth';
 import User from './auth/User';
 import {webpush} from '../webpush';
@@ -66,11 +67,16 @@ function RouterApp() {
     usePageViews();
     return (
         <Switch>
-                <Route exact path="/" component={BulletinBoard} />
+                <Route exact path="/" component={MenuAppBar} />
+                <Route exact path="/apex/update" component={MenuAppBar} />
+                <Route exact path="/apex/charactor" component={MenuAppBar} />
+                <Route exact path="/apex/weapon" component={MenuAppBar} />
+                <Route exact path="/apex/bulletin_board" component={MenuAppBar} />
+                <Route exact path="/apex/contact" component={MenuAppBar} />
+
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/reset" component={Reset} />
                 <Route exact path="/register" component={Register} />
-                <Route exact path="/contact" component={Contact} />
             <Auth>
                 {/* ログイン必須ページ */}
                 <Switch>

@@ -100,7 +100,7 @@ export default function Register() {
 
     return (
         <div>
-            <Header />
+            {/* <Header /> */}
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={classes.paper}>

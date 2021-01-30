@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { useForm } from "react-hook-form";
 import {　useLocation　} from 'react-router-dom';
 
-import Header from '../parts/header';
 import User from '../auth/User';
 import { serverUrl, dateFormat, diffDate, zeroPadding, reloadPage } from '../../common';
 
@@ -297,9 +296,8 @@ export default function BulletinBoard() {
 
     return(
         <div>
-            <Header />
             <div className="select_platform">
-                <div className="select_platform_form select_platform_left_form">
+                <div className="select_platform_form">
                     <div className="select_platform_left_form">
                         <ul>
                             <li className={selected_platform === 'pc' ? classes.selected_platform : ''}
@@ -320,7 +318,7 @@ export default function BulletinBoard() {
                                 <IconButton className={classes.all}><p>ALL</p></IconButton>
                             </li>
                         </ul>
-                        {/* {User.get('device') === 'pc' && ( */}
+
                         <div className="conditions">
                             <h4>絞り込み</h4>
                             {User.get('device') !== 'pc' && (
@@ -419,7 +417,6 @@ export default function BulletinBoard() {
                                 </div> */}
                             </div>
                         </div>
-                        {/* )} */}
                     </div>
 
                     <div  className="select_platform_center_form">
@@ -544,10 +541,15 @@ export default function BulletinBoard() {
                                         }
                                         <Button onClick={() => reply(filtered_articles[key].id, filtered_articles[key].user_name)} variant="contained" color="primary">返信</Button>
                                     </div>
-
                                 </div>
                             )
                         })}
+                    </div>
+
+                    <div className="select_platform_right_form">
+                        <div className="content_menu">
+                            
+                        </div>
                     </div>
 
                 </div>

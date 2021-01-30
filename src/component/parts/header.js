@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import User from '../auth/User';
+import BulletinBoard from '../page/BulletinBoard';
+import Contact from '../page/contact';
+import SideList from '../parts/SideList';
+import TabPanel from './TabPanel';
 import { diffDate, serverUrl } from '../../common';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,17 +16,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Drawer from '@material-ui/core/Drawer';
 import Badge from '@material-ui/core/Badge';
-import { FixedSizeList } from 'react-window';
-
 import MailIcon from '@material-ui/icons/Mail';
 import Paper from '@material-ui/core/Paper';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,6 +44,15 @@ const useStyles = makeStyles((theme) => ({
         width: 250,
         backgroundColor: theme.palette.background.paper,
     },
+    list_title: {
+        textAlign: 'center',
+    },
+    list_title_span: {
+        fontWeight: 'bold',
+        fontSize: '20px',
+        borderBottom: 'dotted 1px',
+        paddingBottom: '15px',
+    },
     list_checked: {
         color: '#1976d2',
         padding: '5px 0 0 0 !important',
@@ -60,20 +69,32 @@ const useStyles = makeStyles((theme) => ({
     },
     header_icon_smart: {
         padding: '7px',
+    },
+    tab: {
+        width: 'auto', 
+        fontSize: '12px',
+        padding: '0 5px',
+        whiteSpace: 'nowrap',
+        fontWeight: 'bold',
     }
 }));
 
-function ListItemLink(props) {
-    return <ListItem button component="a" {...props} />;
-  }
-
-export default function MenuAppBar() {
+export default function MenuAppBar(props) {
 
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const { pathname } = props.location;
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const [left_open, set_left_open] = useState(false);
     const [badge_open, set_badge_open] = useState(false);
+    const [tab_value, set_tab_value] = useState(
+        pathname === '/' ? 0 : 
+        pathname === '/apex/update' ? 1 : 
+        pathname === '/apex/charactor' ? 2 : 
+        pathname === '/apex/weapon' ? 3 : 
+        pathname === '/apex/bulletin_board' ? 4 : 
+        pathname === '/apex/contact' ? 5 : ''
+    );    
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -109,34 +130,17 @@ export default function MenuAppBar() {
         })
     }
 
-    const sideList = (
-        <div className={classes.list}>
-            <List>
-                <ListItemLink href="/">
-                    <ListItemText className={classes.list_checked} primary="Apex Legends エーペックスレジェンズ掲示板" />
-                </ListItemLink>
-                {User.isLoggedIn() ?
-                <div>
-                    <ListItemLink onClick={() => {User.logout();window.location.reload();}} className={classes.list_nochecked}>
-                        <ListItemText primary="ログアウト" />
-                    </ListItemLink>
-                </div>
-                :
-                <div>
-                    <ListItemLink href="/register" className={classes.list_nochecked}>
-                        <ListItemText primary="ユーザー登録" />
-                    </ListItemLink>
-                    <ListItemLink href="/login" className={classes.list_nochecked}>
-                        <ListItemText primary="ログイン" />
-                    </ListItemLink>
-                </div>
-                }
-                <ListItemLink href="/contact" className={classes.list_nochecked}>
-                    <ListItemText primary="お問い合わせ" />
-                </ListItemLink>
-            </List>
-        </div>
-    );
+    const handleTabChange = (event, newValue) => {
+        set_tab_value(newValue);
+    };
+
+    function a11yProps(index) {
+        return {
+            id: `simple-tab-${index}`,
+            'aria-controls': `simple-tabpanel-${index}`,
+        };
+    }
+
 
     return (
         <div className={classes.root}>
@@ -153,7 +157,7 @@ export default function MenuAppBar() {
                         onClick={() => set_left_open(false)}
                         onKeyDown={() => set_left_open(false)}
                       >
-                        {sideList}
+                        <SideList />
                       </div>
                     </Drawer>
 
@@ -233,7 +237,37 @@ export default function MenuAppBar() {
                         </Menu>
                     </div>
                 </Toolbar>
+
+                <Tabs value={tab_value} onChange={handleTabChange} variant="scrollable" scrollButtons="auto">
+                    <Tab className="tab_button" label="サイトトップ" {...a11yProps(0)} />
+                    <Tab className="tab_button" label="最新アップデート" {...a11yProps(1)} />
+                    <Tab className="tab_button" label="最強キャラ" {...a11yProps(2)} />
+                    <Tab className="tab_button" label="最強武器" {...a11yProps(3)} />
+                    <Tab className="tab_button" label="掲示板" {...a11yProps(4)} />
+                    <Tab className="tab_button" label="お問い合わせ" {...a11yProps(5)} />
+                </Tabs>
+
             </AppBar>
+
+            <TabPanel value={tab_value} index={0}>
+                <BulletinBoard />
+            </TabPanel>
+            <TabPanel value={tab_value} index={1}>
+                Item Two
+            </TabPanel>
+            <TabPanel value={tab_value} index={2}>
+                Item Two
+            </TabPanel>
+            <TabPanel value={tab_value} index={3}>
+                Item Three
+            </TabPanel>
+            <TabPanel value={tab_value} index={4}>
+                <BulletinBoard />
+            </TabPanel>
+            <TabPanel value={tab_value} index={5}>
+                <Contact />
+            </TabPanel>
+
         </div>
     );
 }
