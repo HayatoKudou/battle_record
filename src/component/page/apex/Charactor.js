@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 
 import Typography from '@material-ui/core/Typography';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import TwitterIcon from '@material-ui/icons/Twitter';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,12 +16,8 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '30px',
     },
     grid: {padding: '5px !important'},
-    paper: {
-        padding: theme.spacing(2),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-    },
 }));
+
 
 export default function Charactor(){
     const classes = useStyles();
@@ -28,10 +25,14 @@ export default function Charactor(){
     return (
         <div className={classes.root}>
             <Grid container spacing={3}>
-                <Grid className={classes.grid} item xs={3} sm={3}>
-                  <Paper className={classes.paper}>xs=6 sm=3</Paper>
+                <Grid className={classes.grid} item xs={1} sm={1}>
+                  <Paper>
+                        <div>
+                            <a href="" className="sns_form" ><TwitterIcon fontSize="small" />ツイート</a>
+                        </div>
+                  </Paper>
                 </Grid>
-                <Grid className={classes.grid} item xs={6} sm={6}>
+                <Grid className={classes.grid} item xs={8} sm={8}>
                     <Paper>
                         <div className="page_title">
                             <h1>【Apex Legends】最強キャラランキング</h1>
@@ -43,40 +44,40 @@ export default function Charactor(){
                         <div className="table_of_contents">
                             <ul>
                                 <li className="table_of_contents_title">目次: 最強キャラランキング</li>
-                                <li><ArrowRightIcon/>新キャラ評価</li>
-                                <li><ArrowRightIcon/>Sランク</li>
-                                <li><ArrowRightIcon/>Aランク</li>
-                                <li><ArrowRightIcon/>Bランク</li>
-                                <li><ArrowRightIcon/>Cランク</li>
-                                <li><ArrowRightIcon/>キャラ評価基準</li>
+                                <li><a href="#new_character"><ArrowRightIcon/>新キャラ評価</a></li>
+                                <li><a href="#s_rank"><ArrowRightIcon/>Sランク</a></li>
+                                <li><a href="#s_rank"><ArrowRightIcon/>Aランク</a></li>
+                                <li><a href="#b_rank"><ArrowRightIcon/>Bランク</a></li>
+                                <li><a href="#c_rank"><ArrowRightIcon/>Cランク</a></li>
+                                <li><a href="#evaluation_criteria"><ArrowRightIcon/>キャラ評価基準</a></li>
                             </ul>
                         </div>
                        
 
-                        {/* <div className="new_character">
+                        <div id="new_character" className="new_character">
                             <h2>新キャラ評価</h2>
                             <table>
                                 <tr>
-                                    <th>キャラ</th>
-                                    <th>キングスキャニオン</th>
-                                    <th>ワールズエッジ</th>
-                                    <th>オリンパス</th>
-                                    <th>点数</th>
+                                <th><h3>キャラ</h3></th>
+                                    <th><h3>キングスキャニオン</h3></th>
+                                    <th><h3>ワールズエッジ</h3></th>
+                                    <th><h3>オリンパス</h3></th>
+                                    <th><h3>点数</h3></th>
                                 </tr>
                                 <tr>
                                     <td className="character_image">
-                                        <img src="/apex_image/gibraltar.png" alt=""/>
-                                        <p>ジブラルタル</p>
+                                        <img src="/apex_image/fuse.png" alt=""/>
+                                        <p>ヒューズ</p>
                                     </td>
-                                    <td>S</td>
-                                    <td>S</td>
-                                    <td>S</td>
-                                    <td>10/10点</td>
+                                    <td>?</td>
+                                    <td>?</td>
+                                    <td>?</td>
+                                    <td><span className="rank_score">未実装</span></td>
                                 </tr>
                             </table>
-                        </div> */}
+                        </div>
 
-                        <div className="new_character">
+                        <div id="s_rank" name="s_rank" className="new_character">
                             <h2>Sランクキャラ</h2>
                             <table>
                                 <tr>
@@ -111,7 +112,7 @@ export default function Charactor(){
                         </div>
 
 
-                        <div className="new_character">
+                        <div id="a_rank" className="new_character">
                             <h2>Aランクキャラ</h2>
                             <table>
                                 <tr>
@@ -174,7 +175,7 @@ export default function Charactor(){
                             </table>
                         </div>
 
-                        <div className="new_character">
+                        <div id="b_rank" className="new_character">
                             <h2>Bランクキャラ</h2>
                             <table>
                                 <tr>
@@ -217,7 +218,7 @@ export default function Charactor(){
                             </table>
                         </div>
 
-                        <div className="new_character">
+                        <div id="c_rank" className="new_character">
                             <h2>Cランクキャラ</h2>
                             <table>
                                 <tr>
@@ -281,7 +282,7 @@ export default function Charactor(){
                         </div>
 
 
-                        <div className="evaluation_criteria">
+                        <div id="evaluation_criteria" className="evaluation_criteria">
                             <h2>キャラ評価基準</h2>
                             <table>
                                 <tr>
@@ -306,7 +307,21 @@ export default function Charactor(){
                     </Paper>
                 </Grid>
                 <Grid className={classes.grid} item xs={3} sm={3}>
-                  <Paper className={classes.paper}>xs=6 sm=3</Paper>
+                  <Paper>
+                    <div className="latest_info">
+                        <h3>最新情報まとめ</h3>
+                        <ul>
+                            <li><a href="">最強キャラランキング</a></li>
+                        </ul>
+
+                    </div>
+                    <div>
+                        <div>記事ランキング</div>
+                        <ul>
+                            {/* <li>シーズン8</li> */}
+                        </ul>
+                    </div>
+                  </Paper>
                 </Grid>
           </Grid>
         </div>
