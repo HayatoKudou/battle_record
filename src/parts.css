@@ -1,0 +1,171 @@
+.page_title {
+    padding: 15px;
+}
+
+.page_title h1 {
+    font-size: 30px;
+}
+
+.page_title .page_detail {
+    font-size: 15px;
+    margin-bottom: 0px;
+}
+
+.page_title .update_date {
+    font-size: 13px;
+}
+
+
+.table_of_contents {
+    padding-top: 0px;
+    padding: 20px;
+    padding-bottom: 0px;
+}
+
+.table_of_contents .table_of_contents_title {
+    font-size: 17px;
+    padding: 5px;
+}
+
+.table_of_contents ul {
+    border: solid 2px #ffb03f;
+    padding: 0 0.5em;
+    position: relative;
+}
+
+.table_of_contents ul li {
+    line-height: 1.5;
+    padding: 0em 0em 0em 0.5em;
+    border-bottom: dashed 1px silver;
+    list-style-type: none!important;
+    display: flex;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    align-items: center;
+}
+
+.evaluation_criteria {
+    padding: 20px;
+}
+
+.evaluation_criteria h2 {
+    border-left: 6px solid #ccc;
+    margin-bottom: 10px;
+    font-size: 1.17em;
+}
+
+.evaluation_criteria table {
+    border-collapse: collapse;
+}
+
+.evaluation_criteria table tr {
+    border: 1px solid #e2e2e2;
+}
+
+.evaluation_criteria table th {
+    font-size: 17px;
+    width: auto;
+    padding: 10px;
+    background-color: #efefef;
+}
+
+.evaluation_criteria table td {
+    font-size: 14px;
+    background-color: #FFF;
+    border: 1px solid #e2e2e2;
+}
+
+
+
+.new_character {
+    padding: 20px;
+}
+
+.new_character h2 {
+    margin-bottom: 10px;
+    font-size: 1.17em;
+    position: relative;
+    padding: .25em 0 .5em .75em;
+    border-left: 6px solid #3498db;
+}
+
+.new_character h2::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: '';
+    width: 100%;
+    height: 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.new_character .character_image {
+    padding: 5px;
+}
+
+.new_character .character_image p {
+    margin: 0;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.new_character .character_image img {
+    height: 70px;
+}
+
+.new_character table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.new_character table th {
+    width: 20% !important;
+    font-size: 15px;
+    width: auto;
+    padding: 5px;
+    background-color: #efefef;
+}
+
+.new_character table th h3 {
+    white-space: nowrap;
+    font-size: 13px;
+    margin: 0;
+}
+
+.new_character table td {
+    font-size: 14px;
+    background-color: #FFF;
+    border: 1px solid #e2e2e2;
+    text-align: center;
+    padding: 15px;
+}
+
+.rank_score {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.s_rank {
+    font-size: 20px;
+    font-weight: bold;
+    color: darkorange;
+}
+
+.a_rank {
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+}
+
+.b_rank {
+    font-size: 20px;
+    font-weight: bold;
+    color: blue;
+}
+
+.c_rank {
+    font-size: 20px;
+    font-weight: bold;
+    color: #585858;
+}

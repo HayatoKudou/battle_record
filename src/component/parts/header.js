@@ -7,6 +7,9 @@ import SideList from '../parts/SideList';
 import TabPanel from './TabPanel';
 import { diffDate, serverUrl } from '../../common';
 
+import Update from '../page/apex/Update';
+import Charactor from '../page/apex/Charactor';
+
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -93,7 +96,7 @@ export default function MenuAppBar(props) {
         pathname === '/apex/charactor' ? 2 : 
         pathname === '/apex/weapon' ? 3 : 
         pathname === '/apex/bulletin_board' ? 4 : 
-        pathname === '/apex/contact' ? 5 : ''
+        pathname === '/apex/contact' ? 5 : 0
     );    
 
     const handleMenu = (event) => {
@@ -162,7 +165,7 @@ export default function MenuAppBar(props) {
                     </Drawer>
 
                     <Typography variant="h6" className={User.get('device') === 'pc' ? classes.title_pc : classes.title_smartphone + ' header_title'}>
-                        {'Apex Legends エーペックスレジェンズ掲示板'}
+                        {'Apex Legends エーペックスレジェンズ攻略サイト'}
                     </Typography>
                     <div>
                         <div className={classes.header_icons}>
@@ -250,13 +253,13 @@ export default function MenuAppBar(props) {
             </AppBar>
 
             <TabPanel value={tab_value} index={0}>
-                <BulletinBoard />
+                サイトトップ
             </TabPanel>
             <TabPanel value={tab_value} index={1}>
-                Item Two
+                <Update />
             </TabPanel>
             <TabPanel value={tab_value} index={2}>
-                Item Two
+                <Charactor />
             </TabPanel>
             <TabPanel value={tab_value} index={3}>
                 Item Three

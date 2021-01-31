@@ -68,6 +68,7 @@ function RouterApp() {
     return (
         <Switch>
                 <Route exact path="/" component={MenuAppBar} />
+                <Route exact path="/apex" component={MenuAppBar} />
                 <Route exact path="/apex/update" component={MenuAppBar} />
                 <Route exact path="/apex/charactor" component={MenuAppBar} />
                 <Route exact path="/apex/weapon" component={MenuAppBar} />

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './common.css';
+import './parts.css';
 import Main from './component/Main';
 import reportWebVitals from './reportWebVitals';
 
